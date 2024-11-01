@@ -1,10 +1,6 @@
 package org.firstinspires.ftc.teamcode.kronbot;
 
-import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_LEFT_MAX;
-import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_LEFT_MIN;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_LEFT_START;
-import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_RIGHT_MAX;
-import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_RIGHT_MIN;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_RIGHT_START;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.CLAW_MAX;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.CLAW_MIN;
@@ -17,7 +13,6 @@ import com.qualcomm.hardware.bosch.BHI260IMU;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.teamcode.kronbot.utils.Constants;
 import org.firstinspires.ftc.teamcode.kronbot.utils.drivers.LiftDriver;
 import org.firstinspires.ftc.teamcode.kronbot.utils.drivers.MotorDriver;
 import org.firstinspires.ftc.teamcode.kronbot.utils.wrappers.ControlHubGyroscope;
@@ -28,8 +23,8 @@ public class KronBot {
     public MotorDriver motors;
     public LiftDriver lift;
 
-    public Servo armLeft;
-    public Servo armRight;
+    public com.qualcomm.robotcore.hardware.Servo armLeft;
+    public com.qualcomm.robotcore.hardware.Servo armRight;
     public Servo claw;
     public Servo hand;
 
@@ -57,10 +52,11 @@ public class KronBot {
     }
 
     public void initServo(HardwareMap hardwareMap) {
-        armLeft = new Servo(hardwareMap);
-        armLeft.init("armLeftServo", false, false, ARM_LEFT_MIN, ARM_LEFT_MAX, ARM_LEFT_START);
-        armRight = new Servo(hardwareMap);
-        armRight.init("armRightServo", false, false, ARM_RIGHT_MIN, ARM_RIGHT_MAX, ARM_RIGHT_START);
+        armLeft = hardwareMap.get(com.qualcomm.robotcore.hardware.Servo.class, "armLeftServo");
+        armLeft.setPosition(ARM_LEFT_START);
+        armRight = hardwareMap.get(com.qualcomm.robotcore.hardware.Servo.class, "armRightServo");
+        armRight.setPosition(ARM_RIGHT_START);
+
         claw = new Servo(hardwareMap);
         claw.init("clawServo", false, false, CLAW_MIN, CLAW_MAX, CLAW_START);
         hand = new Servo(hardwareMap);

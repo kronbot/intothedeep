@@ -1,5 +1,9 @@
 package org.firstinspires.ftc.teamcode.kronbot.opmodes;
 
+import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_LEFT_MAX;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_LEFT_MIN;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_RIGHT_MAX;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_RIGHT_MIN;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.LIFT_INIT_POSITION;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -64,7 +68,14 @@ public class MainDrivingOp extends LinearOpMode {
             handButton.shortPress();
             robot.hand.run(handButton.getShortToggle());
 
-            //
+            // Arm
+            if (handButton.getShortToggle()) {
+                robot.armLeft.setPosition(ARM_LEFT_MIN);
+                robot.armRight.setPosition(ARM_RIGHT_MIN);
+            } else {
+                robot.armLeft.setPosition(ARM_LEFT_MAX);
+                robot.armRight.setPosition(ARM_RIGHT_MAX);
+            }
 
             // Wheels
             driveModeButton.updateButton(drivingGamepad.square);
