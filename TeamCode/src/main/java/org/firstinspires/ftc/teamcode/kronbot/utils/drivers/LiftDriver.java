@@ -1,20 +1,15 @@
 package org.firstinspires.ftc.teamcode.kronbot.utils.drivers;
 
-import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.LIFT_INIT_POSITION;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.LIFT_MAX_POSITION;
-import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.LIFT_REVERSE_CONSTANT;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.LIFT_REVERSE_POWER_CONSTANT;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.LIFT_TOLERANCE;
-import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.REST_POWER;
-import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.SLIDES_SPEED;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.LIFT_REST_POWER;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.kronbot.utils.Constants;
-import org.firstinspires.ftc.teamcode.kronbot.utils.wrappers.Button;
 import org.firstinspires.ftc.teamcode.kronbot.utils.wrappers.Motor;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Gamepad;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 
 
 /**
@@ -40,17 +35,17 @@ public class LiftDriver {
 
     public void run(double power) {
         if (power < 0)
-            power = power * LIFT_REVERSE_CONSTANT;
+            power = power * LIFT_REVERSE_POWER_CONSTANT;
 
         if (liftMotor.getCurrentPosition() >= LIFT_MAX_POSITION && power > 0) {
-            liftMotor.setPower(REST_POWER);
+            liftMotor.setPower(LIFT_REST_POWER);
             return;
         } else if (liftMotor.getCurrentPosition() <= 0 && power < 0) {
-            liftMotor.setPower(REST_POWER);
+            liftMotor.setPower(LIFT_REST_POWER);
             return;
         }
 
-        if (power == 0) setPower(Constants.REST_POWER);
+        if (power == 0) setPower(Constants.LIFT_REST_POWER);
         else setPower(power);
     }
 

@@ -40,6 +40,9 @@ public class MainDrivingOp extends LinearOpMode {
         Button driveModeButton = new Button();
         Button reverseButton = new Button();
 
+        Button clawButton = new Button();
+        Button handButton = new Button();
+
         while (!isStopRequested() && !opModeIsActive()) {
             telemetry.addLine("Initialization Ready");
             telemetry.update();
@@ -48,6 +51,21 @@ public class MainDrivingOp extends LinearOpMode {
         if (isStopRequested()) return;
 
         while (opModeIsActive() && !isStopRequested()) {
+            // Lift
+            robot.lift.run(utilityGamepad.right_trigger - utilityGamepad.left_trigger);
+
+            // Claw
+            clawButton.updateButton(utilityGamepad.circle);
+            clawButton.shortPress();
+            robot.claw.run(clawButton.getShortToggle());
+
+            // Hand
+            handButton.updateButton(utilityGamepad.square);
+            handButton.shortPress();
+            robot.hand.run(handButton.getShortToggle());
+
+            //
+
             // Wheels
             driveModeButton.updateButton(drivingGamepad.square);
             driveModeButton.longPress();

@@ -21,7 +21,7 @@ public class DriveConstants {
     /*
      * These are motor constants that should be listed online for your motors.
      */
-    public static final double TICKS_PER_REV = 537.6;
+    public static final double TICKS_PER_REV = 537.7;
     public static final double MAX_RPM = 312;
 
     /*
@@ -65,10 +65,10 @@ public class DriveConstants {
      * small and gradually increase them later after everything is working. All distance units are
      * inches.
      */
-    public static double MAX_VEL = 35;
-    public static double MAX_ACCEL = 35;
-    public static double MAX_ANG_VEL = 3.5359096216084502; // Math.toRadians(202.59269805786412397350565753334);
-    public static double MAX_ANG_ACCEL = 3; // Math.toRadians(202.59269805786412397350565753334);
+    public static double MAX_VEL = MAX_RPM*GEAR_RATIO*WHEEL_RADIUS/30*Math.PI;
+    public static double MAX_ACCEL = MAX_VEL;
+    public static double MAX_ANG_VEL = Math.toRadians(180); // Math.toRadians(202.59269805786412397350565753334);
+    public static double MAX_ANG_ACCEL = Math.toRadians(180); // Math.toRadians(202.59269805786412397350565753334);
 
     /*
      * Adjust the orientations here to match your robot. See the FTC SDK documentation for details.

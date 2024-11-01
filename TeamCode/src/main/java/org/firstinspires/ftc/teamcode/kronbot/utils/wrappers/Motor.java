@@ -48,7 +48,7 @@ public class Motor {
         controller.setTargetPosition(motor.getTargetPosition());
 
         if (motor.isBusy())
-            motor.setPower(Constants.SLIDES_SPEED);
+            motor.setPower(Constants.LIFT_POWER);
 //        else
 //            motor.setPower(0.1);
     }

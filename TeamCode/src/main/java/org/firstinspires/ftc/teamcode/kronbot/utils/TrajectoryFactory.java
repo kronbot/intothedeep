@@ -1,15 +1,8 @@
 package org.firstinspires.ftc.teamcode.kronbot.utils;
 
 import static org.firstinspires.ftc.teamcode.kronbot.utils.AutonomousConstants.coordinatesConvert;
-import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.LIFT_REVERSE_CONSTANT;
-import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.REST_POWER;
-import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.SLIDES_SPEED;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
-import com.acmerobotics.roadrunner.geometry.Vector2d;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.kronbot.KronBot;
