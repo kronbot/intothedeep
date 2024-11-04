@@ -19,6 +19,7 @@ public class Constants {
     public static int BUTTON_LONG_PRESS_TIME = 750;
 
     public static double ROBOT_SPEED = 1.0;
+    public static double POWER_EXPONENT = 2.0;
 
     public static double LIFT_POWER = 1.0;
     public static double LIFT_REST_POWER = 0.10;
@@ -35,16 +36,15 @@ public class Constants {
     public static double ARM_LEFT_MAX = 1;
     public static double ARM_LEFT_START = 0;
 
-    public static double ARM_RIGHT_MIN = 0.65;
-    public static double ARM_RIGHT_MAX = 0.7;
+    public static double ARM_RIGHT_MIN = 0.57;
+    public static double ARM_RIGHT_MAX = 0.75   ;
     public static double ARM_RIGHT_START = 0.4;
 
-    public static double CLAW_MIN = 0;
-    public static double CLAW_MAX = 0.5;
-    public static double CLAW_START = 0;
+    public static double CLAW_CLOSE = 0;
+    public static double CLAW_OPEN = 0.5;
 
     public static double HAND_MIN = 0.3;
-    public static double HAND_MAX = 0.6;
+    public static double HAND_MAX = 0.57;
     public static double HAND_START = 1;
 
     public static LogoFacingDirection LOGO_FACING_DIRECTION = LogoFacingDirection.RIGHT;

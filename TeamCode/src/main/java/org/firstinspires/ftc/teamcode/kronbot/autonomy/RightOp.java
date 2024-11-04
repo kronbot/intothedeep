@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.kronbot.autonomy;
 
+
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -15,37 +16,23 @@ import org.firstinspires.ftc.teamcode.roadrunner.trajectorysequence.TrajectorySe
 
 import java.util.List;
 
-@Autonomous(name = "Right Red", group = Constants.MAIN_GROUP)
-public class RightRed extends LinearOpMode {
+@Autonomous(name = "Right", group = Constants.MAIN_GROUP)
+public class RightOp extends LinearOpMode {
     private final KronBot robot = new KronBot();
 
-    GameElementDetection detection;
-    GameElementDetection.Position position;
-
     @Override
-    public void runOpMode()  throws InterruptedException {
-        robot.initMotors(hardwareMap);
-        robot.initIMU(hardwareMap);
-
+    public void runOpMode() throws InterruptedException {
+        robot.initAutonomy(hardwareMap);
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
         FtcDashboard dashboard = FtcDashboard.getInstance();
         telemetry = new MultipleTelemetry(telemetry, dashboard.getTelemetry());
 
-        detection = new GameElementDetection();
-        detection.init(hardwareMap, false);
-
-        FtcDashboard.getInstance().startCameraStream(detection.getCamera(), 30);
-
         while (!opModeIsActive() && !isStopRequested()) {
-            position = detection.getPosition();
-            telemetry.addData("Position", detection.getPosition());
             telemetry.update();
         }
 
-        detection.close();
-
-        List<TrajectorySequence> trajectory = TrajectoryFactory.createTrajectory(drive, position, robot, telemetry, () -> {sleep(1000); return; }, false, true);
+        List<TrajectorySequence> trajectory = TrajectoryFactory.createTrajectory(drive, robot, telemetry,false, () -> {sleep(1000); return; });
 
         waitForStart();
 

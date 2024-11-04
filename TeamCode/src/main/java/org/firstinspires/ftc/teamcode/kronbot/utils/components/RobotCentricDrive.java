@@ -7,6 +7,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.kronbot.KronBot;
 
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.CONTROLLER_DEADZONE;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.POWER_EXPONENT;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ROBOT_SPEED;
 
 /**
@@ -51,7 +52,9 @@ public class RobotCentricDrive {
 
     public double addons(double value) {
         if (Math.abs(value) < CONTROLLER_DEADZONE) return 0;
-        return value * ROBOT_SPEED;
+        double normalizedValue = (Math.abs(value) - CONTROLLER_DEADZONE) / (1 - CONTROLLER_DEADZONE);
+        double poweredValue = Math.pow(normalizedValue, POWER_EXPONENT);
+        return Math.signum(value) * poweredValue * ROBOT_SPEED;
     }
 
     public void setReverse(boolean isReverse) {

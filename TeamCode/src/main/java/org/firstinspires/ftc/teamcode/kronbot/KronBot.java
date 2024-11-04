@@ -2,12 +2,13 @@ package org.firstinspires.ftc.teamcode.kronbot;
 
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_LEFT_START;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_RIGHT_START;
-import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.CLAW_MAX;
-import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.CLAW_MIN;
-import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.CLAW_START;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.CLAW_OPEN;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.CLAW_CLOSE;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.HAND_MAX;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.HAND_MIN;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.HAND_START;
+
+import static java.lang.Thread.sleep;
 
 import com.qualcomm.hardware.bosch.BHI260IMU;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -52,15 +53,16 @@ public class KronBot {
     }
 
     public void initServo(HardwareMap hardwareMap) {
+        claw = new Servo(hardwareMap);
+        claw.init("clawServo", false, false, CLAW_CLOSE, CLAW_OPEN, CLAW_OPEN);
+        hand = new Servo(hardwareMap);
+        hand.init("handServo", false, false, HAND_MIN, HAND_MAX, HAND_START);
+
         armLeft = hardwareMap.get(com.qualcomm.robotcore.hardware.Servo.class, "armLeftServo");
         armLeft.setPosition(ARM_LEFT_START);
         armRight = hardwareMap.get(com.qualcomm.robotcore.hardware.Servo.class, "armRightServo");
         armRight.setPosition(ARM_RIGHT_START);
 
-        claw = new Servo(hardwareMap);
-        claw.init("clawServo", false, false, CLAW_MIN, CLAW_MAX, CLAW_START);
-        hand = new Servo(hardwareMap);
-        hand.init("handServo", false, false, HAND_MIN, HAND_MAX, HAND_START);
     }
 
     public void initAutonomy(HardwareMap hardwareMap) {

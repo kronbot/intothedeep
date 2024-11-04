@@ -14,22 +14,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TrajectoryFactory {
-    public static List<TrajectorySequence> createTrajectory(SampleMecanumDrive drive, GameElementDetection.Position position, KronBot robot, Telemetry telemetry, Runnable sleep, boolean isBlue, boolean isClose) {
+    public static List<TrajectorySequence> createTrajectory(SampleMecanumDrive drive, KronBot robot, Telemetry telemetry, boolean isLeft, Runnable sleep) {
         AutonomousConstants.Coordinates pixelCoordinates;
 
         Pose2d startPose;
 
        List<TrajectorySequence> trajectories = new ArrayList<TrajectorySequence>();
 
-        int multiplier = isBlue ? -1 : 1;
-
-        if (isBlue) {
-            if (!isClose) startPose = coordinatesConvert(AutonomousConstants.StartPoseRightBlue);
-            else startPose = coordinatesConvert(AutonomousConstants.StartPoseLeftBlue);
-        } else {
-            if (isClose) startPose = coordinatesConvert(AutonomousConstants.StartPoseRightRed);
-            else startPose = coordinatesConvert(AutonomousConstants.StartPoseLeftRed);
-        }
+        if (!isLeft) startPose = coordinatesConvert(AutonomousConstants.StartPoseRightBlue);
+        else startPose = coordinatesConvert(AutonomousConstants.StartPoseLeftBlue);
 
         return trajectories;
     }
