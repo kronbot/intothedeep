@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.kronbot.detection;
+package org.firstinspires.ftc.teamcode.kronbot.utils.detection;
 
 import android.util.Size;
 

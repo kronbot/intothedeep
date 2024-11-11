@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.kronbot.detection.legacy;
+package org.firstinspires.ftc.teamcode.kronbot.utils.detection.legacy;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.kronbot.utils.Constants;

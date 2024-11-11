@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.kronbot.autonomy;
+package org.firstinspires.ftc.teamcode.kronbot.autonomous;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
@@ -9,11 +9,11 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.kronbot.KronBot;
 
-import static org.firstinspires.ftc.teamcode.kronbot.utils.AutonomousConstants.FirstPose;
-import static org.firstinspires.ftc.teamcode.kronbot.utils.AutonomousConstants.SecondPose;
-import static org.firstinspires.ftc.teamcode.kronbot.utils.AutonomousConstants.ThirdPose;
-import static org.firstinspires.ftc.teamcode.kronbot.utils.AutonomousConstants.coordinatesConvert;
-import static org.firstinspires.ftc.teamcode.kronbot.utils.AutonomousConstants.park;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.autonomous.AutonomousConstants.FirstPose;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.autonomous.AutonomousConstants.SecondPose;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.autonomous.AutonomousConstants.ThirdPose;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.autonomous.AutonomousConstants.coordinatesConvert;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.autonomous.AutonomousConstants.park;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_LEFT_MIN;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_RIGHT_MIN;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.CLAW_CLOSE;

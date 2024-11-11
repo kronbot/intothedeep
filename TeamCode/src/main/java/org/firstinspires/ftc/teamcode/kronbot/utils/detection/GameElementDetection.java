@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.kronbot.detection;
+package org.firstinspires.ftc.teamcode.kronbot.utils.detection;
 
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.BLUE_HUE_HIGH;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.BLUE_HUE_LOW;

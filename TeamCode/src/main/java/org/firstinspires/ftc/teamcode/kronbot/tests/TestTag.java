@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.teamcode.kronbot.detection.TagDetection;
+import org.firstinspires.ftc.teamcode.kronbot.utils.detection.TagDetection;
 import org.firstinspires.ftc.teamcode.kronbot.utils.Constants;
 
 @Disabled

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.kronbot.detection.legacy;
+package org.firstinspires.ftc.teamcode.kronbot.utils.detection.legacy;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 

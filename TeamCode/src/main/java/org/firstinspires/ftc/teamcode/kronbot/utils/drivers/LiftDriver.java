@@ -31,6 +31,7 @@ public class LiftDriver {
             liftMotor.setTolerance(LIFT_TOLERANCE);
             liftMotor.setPositionPID(kP, kI, kD);
         }
+        runToPosition();
     }
 
     public void run(double power) {

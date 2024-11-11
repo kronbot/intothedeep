@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.kronbot.opmodes;
+package org.firstinspires.ftc.teamcode.kronbot.manual;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;

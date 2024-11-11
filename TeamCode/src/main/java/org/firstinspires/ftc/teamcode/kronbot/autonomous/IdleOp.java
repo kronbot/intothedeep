@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.kronbot.autonomy;
+package org.firstinspires.ftc.teamcode.kronbot.autonomous;
 
 
 import com.acmerobotics.dashboard.FtcDashboard;
