@@ -4,6 +4,8 @@ import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
+import org.firstinspires.ftc.teamcode.kronbot.utils.Constants;
+
 /*
  * Constants shared between multiple drive types.
  *
@@ -54,7 +56,7 @@ public class DriveConstants {
      * motor encoders or have elected not to use them for velocity control, these values should be
      * empirically tuned.
      */
-    public static double kV = 0.01226;
+    public static double kV = 0.014;
     public static double kA = 0.002;
     public static double kStatic = 0.185;
 
@@ -73,10 +75,8 @@ public class DriveConstants {
     /*
      * Adjust the orientations here to match your robot. See the FTC SDK documentation for details.
      */
-    public static RevHubOrientationOnRobot.LogoFacingDirection LOGO_FACING_DIR =
-            RevHubOrientationOnRobot.LogoFacingDirection.UP;
-    public static RevHubOrientationOnRobot.UsbFacingDirection USB_FACING_DIR =
-            RevHubOrientationOnRobot.UsbFacingDirection.FORWARD;
+    public static RevHubOrientationOnRobot.LogoFacingDirection LOGO_FACING_DIR = Constants.LOGO_FACING_DIRECTION;
+    public static RevHubOrientationOnRobot.UsbFacingDirection USB_FACING_DIR = Constants.USB_FACING_DIRECTION;
 
 
     public static double encoderTicksToInches(double ticks) {
