@@ -7,6 +7,9 @@ import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.CLAW_CLOSE;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.HAND_MAX;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.HAND_MIN;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.HAND_START;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.INTAKE_MAX;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.INTAKE_MIN;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.INTAKE_START;
 
 import static java.lang.Thread.sleep;
 
@@ -28,6 +31,8 @@ public class KronBot {
     public com.qualcomm.robotcore.hardware.Servo armRight;
     public Servo claw;
     public Servo hand;
+
+    public Servo intake;
 
     public ControlHubGyroscope gyroscope;
 
@@ -55,13 +60,18 @@ public class KronBot {
     public void initServo(HardwareMap hardwareMap) {
         claw = new Servo(hardwareMap);
         claw.init("clawServo", false, false, CLAW_CLOSE, CLAW_OPEN, CLAW_OPEN);
+
         hand = new Servo(hardwareMap);
         hand.init("handServo", false, false, HAND_MIN, HAND_MAX, HAND_START);
+
+        intake = new Servo(hardwareMap);
+        intake.init("intakeServo", false, false, INTAKE_MIN, INTAKE_MAX, INTAKE_START);
 
         armLeft = hardwareMap.get(com.qualcomm.robotcore.hardware.Servo.class, "armLeftServo");
         armLeft.setPosition(ARM_LEFT_START);
         armRight = hardwareMap.get(com.qualcomm.robotcore.hardware.Servo.class, "armRightServo");
         armRight.setPosition(ARM_RIGHT_START);
+
 
     }
 

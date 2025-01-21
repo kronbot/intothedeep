@@ -4,16 +4,20 @@ import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_LEFT_MA
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_LEFT_MIN;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_RIGHT_MAX;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_RIGHT_MIN;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.INTAKE_MAX;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.INTAKE_MIN;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.kronbot.KronBot;
 import org.firstinspires.ftc.teamcode.kronbot.utils.components.FieldCentricDrive;
 import org.firstinspires.ftc.teamcode.kronbot.utils.components.RobotCentricDrive;
 import org.firstinspires.ftc.teamcode.kronbot.utils.Constants;
 import org.firstinspires.ftc.teamcode.kronbot.utils.wrappers.Button;
+import org.firstinspires.ftc.teamcode.kronbot.utils.wrappers.Servo;
 
 /**
  * The main TeleOP program for the driving period of the game.
@@ -46,6 +50,11 @@ public class MainDrivingOp extends LinearOpMode {
         Button clawButton = new Button();
         Button handButton = new Button();
 
+        Button intakeButton = new Button();
+
+        Servo intakeServo = new Servo(hardwareMap);
+
+
         while (!isStopRequested() && !opModeIsActive()) {
             telemetry.addLine("Initialization Ready");
             telemetry.update();
@@ -56,6 +65,10 @@ public class MainDrivingOp extends LinearOpMode {
         while (opModeIsActive() && !isStopRequested()) {
             // Lift
             robot.lift.run(utilityGamepad.right_trigger - utilityGamepad.left_trigger);
+
+            //intake servo
+            intakeServo.setPosition(INTAKE_MIN);
+            intakeServo.runIncrement(utilityGamepad.right_bumper, utilityGamepad.left_bumper);
 
             // Claw
             clawButton.updateButton(utilityGamepad.circle);
