@@ -6,6 +6,8 @@ import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_RIGHT_M
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_RIGHT_MIN;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.INTAKE_MAX;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.INTAKE_MIN;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.WHEELS_MAX;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.WHEELS_MIN;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -50,10 +52,11 @@ public class MainDrivingOp extends LinearOpMode {
         Button clawButton = new Button();
         Button handButton = new Button();
 
-        Button intakeButton = new Button();
+        Button intakeWheelsButton = new Button();
 
         Servo intakeServo = new Servo(hardwareMap);
 
+        Button intakePassButton = new Button();
 
         while (!isStopRequested() && !opModeIsActive()) {
             telemetry.addLine("Initialization Ready");
@@ -66,9 +69,19 @@ public class MainDrivingOp extends LinearOpMode {
             // Lift
             robot.lift.run(utilityGamepad.right_trigger - utilityGamepad.left_trigger);
 
-            //intake servo
+            //intake sliders
             intakeServo.setPosition(INTAKE_MIN);
             intakeServo.runIncrement(utilityGamepad.right_bumper, utilityGamepad.left_bumper);
+
+            //intake wheels
+            intakeWheelsButton.updateButton(utilityGamepad.triangle);
+            intakeWheelsButton.shortPress();
+            robot.intakeWheels.run(intakeWheelsButton.getShortToggle());
+
+            //intake pass
+            intakePassButton.updateButton(utilityGamepad.square);
+            intakePassButton.shortPress();
+            robot.intakePass.run(intakePassButton.getShortToggle());
 
             // Claw
             clawButton.updateButton(utilityGamepad.circle);

@@ -10,6 +10,10 @@ import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.HAND_START;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.INTAKE_MAX;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.INTAKE_MIN;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.INTAKE_START;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.PASS_MAX;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.PASS_MIN;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.WHEELS_MAX;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.WHEELS_MIN;
 
 import static java.lang.Thread.sleep;
 
@@ -31,8 +35,10 @@ public class KronBot {
     public com.qualcomm.robotcore.hardware.Servo armRight;
     public Servo claw;
     public Servo hand;
-
     public Servo intake;
+
+    public Servo intakeWheels;
+    public Servo intakePass;
 
     public ControlHubGyroscope gyroscope;
 
@@ -72,6 +78,11 @@ public class KronBot {
         armRight = hardwareMap.get(com.qualcomm.robotcore.hardware.Servo.class, "armRightServo");
         armRight.setPosition(ARM_RIGHT_START);
 
+        intakeWheels = new Servo(hardwareMap);
+        intakeWheels.init("intakeWheelsServo", false, false, WHEELS_MIN, WHEELS_MAX, WHEELS_MAX);
+
+        intakePass = new Servo(hardwareMap);
+        intakePass.init("intakePassServo", false, false, PASS_MIN, PASS_MAX, PASS_MAX);
 
     }
 

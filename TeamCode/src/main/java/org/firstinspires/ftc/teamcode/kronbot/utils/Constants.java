@@ -48,9 +48,14 @@ public class Constants {
     public static double HAND_START = 1;
 
     //constantele astea trebuie schimbate
-    public static double INTAKE_MIN = 2;
-    public static double INTAKE_MAX = 2;
+    public static double INTAKE_MIN = 0.5;
+    public static double INTAKE_MAX = 1.5;
     public static double INTAKE_START = 0;
+
+    public static double WHEELS_MIN = 2;
+    public static double WHEELS_MAX = 2;
+    public static double PASS_MIN = 2;
+    public static double PASS_MAX = 2;
 
     public static LogoFacingDirection LOGO_FACING_DIRECTION = LogoFacingDirection.RIGHT;
     public static UsbFacingDirection USB_FACING_DIRECTION = UsbFacingDirection.FORWARD;
