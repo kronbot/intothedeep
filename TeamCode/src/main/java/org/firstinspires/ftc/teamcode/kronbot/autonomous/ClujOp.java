@@ -46,7 +46,6 @@ public class ClujOp extends LinearOpMode {
         waitForStart();
 
         if (opModeIsActive()) {
-            telemetry.addData("Status", "Following trajectory to pose1...");
             telemetry.update();
 
             drive.followTrajectorySequence(trajectoryToPose1);
@@ -59,8 +58,6 @@ public class ClujOp extends LinearOpMode {
             hardwareMap.servo.get("clawServo").setPosition(Constants.CLAW_OPEN);
 
 
-
-            telemetry.addData("Status", "Reached pose1.");
             telemetry.update();
         }
 
