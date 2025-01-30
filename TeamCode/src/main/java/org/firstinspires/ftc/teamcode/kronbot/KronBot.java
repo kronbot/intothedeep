@@ -55,15 +55,18 @@ public class KronBot {
     }
 
     public void initLift(HardwareMap hardwareMap) {
-//        Motor liftMotorWrap = new Motor(hardwareMap);
-//        liftMotor = new LiftDriver();
-//        liftMotor.init(liftMotor, false);
+        Motor liftMotorLeft = new Motor(hardwareMap);
+        liftLeft = new LiftDriver();
+        liftLeft.init(liftMotorLeft, false);
+        Motor liftMotorRight = new Motor(hardwareMap);
+        liftRight = new LiftDriver();
+        liftRight.init(liftMotorRight, true);
 
-        liftMotorLeft = hardwareMap.get(com.qualcomm.robotcore.hardware.DcMotor.class, "liftMotorLeft");
-        liftMotorLeft.setZeroPowerBehavior(com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior.BRAKE);
-//        liftMotorLeft.setDirection(com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE);
-        liftMotorRight = hardwareMap.get(com.qualcomm.robotcore.hardware.DcMotor.class, "liftMotorRight");
-        liftMotorRight.setZeroPowerBehavior(com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior.BRAKE);
+//        liftMotorLeft = hardwareMap.get(com.qualcomm.robotcore.hardware.DcMotor.class, "liftMotorLeft");
+//        liftMotorLeft.setZeroPowerBehavior(com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior.BRAKE);
+////        liftMotorLeft.setDirection(com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE);
+//        liftMotorRight = hardwareMap.get(com.qualcomm.robotcore.hardware.DcMotor.class, "liftMotorRight");
+//        liftMotorRight.setZeroPowerBehavior(com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
     public void initServo(HardwareMap hardwareMap) {

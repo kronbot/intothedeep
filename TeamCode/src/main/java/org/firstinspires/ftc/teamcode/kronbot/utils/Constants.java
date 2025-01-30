@@ -35,13 +35,13 @@ public class Constants {
     public static double ARM_LEFT_MIN = 0.25;
     public static double ARM_LEFT_MAX = 0.86;
     public static double ARM_LEFT_INT = 0.45;
-    public static double ARM_LEFT_TEST = 0.3;
+    public static double ARM_LEFT_TEST = 0.7;
 
 
     public static double ARM_RIGHT_MIN = 0.25;
     public static double ARM_RIGHT_MAX = 0.86;
     public static double ARM_RIGHT_INT = 0.45;
-    public static double ARM_RIGHT_TEST = 0.3;
+    public static double ARM_RIGHT_TEST = 0.7;
 
     public static double CLAW_CLOSE = 0.45;
     public static double CLAW_OPEN = 0.23;

@@ -82,18 +82,18 @@ public class MainDrivingOp extends LinearOpMode {
 
         while (opModeIsActive() && !isStopRequested()) {
             // Lift
-//            robot.liftLeft.run(utilityGamepad.right_trigger - utilityGamepad.left_trigger);
-//            robot.liftRight.run(utilityGamepad.right_trigger - utilityGamepad.left_trigger);
-            if (utilityGamepad.right_trigger > CONTROLLER_DEADZONE) {
-                robot.liftMotorLeft.setPower(-utilityGamepad.right_trigger);
-                robot.liftMotorRight.setPower(-utilityGamepad.right_trigger);
-            } else if (utilityGamepad.left_trigger > CONTROLLER_DEADZONE) {
-                robot.liftMotorLeft.setPower(utilityGamepad.left_trigger * LIFT_REVERSE_POWER);
-                robot.liftMotorRight.setPower(utilityGamepad.left_trigger * LIFT_REVERSE_POWER);
-            } else {
-                robot.liftMotorLeft.setPower(-LIFT_REST_POWER);
-                robot.liftMotorRight.setPower(-LIFT_REST_POWER);
-            }
+          robot.liftLeft.run(utilityGamepad.right_trigger - utilityGamepad.left_trigger);
+          robot.liftRight.run(utilityGamepad.right_trigger - utilityGamepad.left_trigger);
+//            if (utilityGamepad.right_trigger > CONTROLLER_DEADZONE) {
+//                robot.liftMotorLeft.setPower(-utilityGamepad.right_trigger);
+//                robot.liftMotorRight.setPower(-utilityGamepad.right_trigger);
+//            } else if (utilityGamepad.left_trigger > CONTROLLER_DEADZONE) {
+//                robot.liftMotorLeft.setPower(utilityGamepad.left_trigger * LIFT_REVERSE_POWER);
+//                robot.liftMotorRight.setPower(utilityGamepad.left_trigger * LIFT_REVERSE_POWER);
+//            } else {
+//                robot.liftMotorLeft.setPower(-LIFT_REST_POWER);
+//                robot.liftMotorRight.setPower(-LIFT_REST_POWER);
+//            }
 
             if (!waiting.get()) {
                 // Intake Sliders
@@ -158,14 +158,14 @@ public class MainDrivingOp extends LinearOpMode {
 
                     doAllButton.resetToggles();
 
-                    clawButton.resetToggles();
-                    robot.claw.setPosition(CLAW_OPEN);
-
-                    topButton.resetToggles();
-                    leftButton.resetToggles();
-                    rightButton.resetToggles();
-                    robot.armRight.setPosition(ARM_RIGHT_MAX);
-                   // robot.armLeft.setPosition(ARM_LEFT_MAX);
+//                    clawButton.resetToggles();
+//                    robot.claw.setPosition(CLAW_OPEN);
+//
+//                    topButton.resetToggles();
+//                    leftButton.resetToggles();
+//                    rightButton.resetToggles();
+//                    robot.armRight.setPosition(ARM_RIGHT_MAX);
+//                    robot.armLeft.setPosition(ARM_LEFT_MAX);
 
                     try {
                         Thread.sleep(350);
@@ -173,20 +173,30 @@ public class MainDrivingOp extends LinearOpMode {
                         robot.intakeServoRight.setPosition(INTAKE_MAX);
                         robot.intakeSlideServoRight.setPosition(SLIDE_MAX_RIGHT);
 
+                        clawButton.resetToggles();
+                        robot.claw.setPosition(CLAW_OPEN);
+
+                        Thread.sleep(350);
+                        topButton.resetToggles();
+                        leftButton.resetToggles();
+                        rightButton.resetToggles();
+                        robot.armRight.setPosition(ARM_RIGHT_MAX);
+                        robot.armLeft.setPosition(ARM_LEFT_MAX);
+
                         Thread.sleep(800);
                         robot.intakeWheels.runContinuous(false, true);
-                        Thread.sleep(300);
+                        Thread.sleep(0);
 
                         robot.claw.setPosition(CLAW_CLOSE);
                         Thread.sleep(300);
                         robot.armRight.setPosition(ARM_RIGHT_TEST);
-                        //robot.armLeft.setPosition(ARM_LEFT_TEST);
+                        robot.armLeft.setPosition(ARM_LEFT_TEST);
                         Thread.sleep(300);
                         robot.armRight.setPosition(ARM_RIGHT_MAX);
-                        //robot.armLeft.setPosition(ARM_LEFT_MAX);
+                        robot.armLeft.setPosition(ARM_LEFT_MAX);
                         Thread.sleep(300);
                         robot.armRight.setPosition(ARM_RIGHT_INT);
-                        //robot.armLeft.setPosition(ARM_LEFT_INT);
+                        robot.armLeft.setPosition(ARM_LEFT_INT);
                         robot.intakeWheels.runContinuous(false, false);
 
                         Thread.sleep(200);
