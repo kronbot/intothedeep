@@ -1,5 +1,9 @@
 package org.firstinspires.ftc.teamcode.kronbot.manual;
 
+import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_LEFT_INT;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_LEFT_MAX;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_LEFT_MIN;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_LEFT_TEST;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_RIGHT_INT;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_RIGHT_MAX;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_RIGHT_MIN;
@@ -132,12 +136,15 @@ public class MainDrivingOp extends LinearOpMode {
                 rightButton.shortPress();
                 if (leftButton.getShortToggle()) {
                     robot.armRight.setPosition(ARM_RIGHT_MIN);
+                    robot.armLeft.setPosition(ARM_LEFT_MIN);
                     leftButton.resetToggles();
                 } else if (topButton.getShortToggle()) {
                     robot.armRight.setPosition(ARM_RIGHT_INT);
+                    robot.armLeft.setPosition(ARM_LEFT_INT);
                     topButton.resetToggles();
                 } else if (rightButton.getShortToggle()) {
                     robot.armRight.setPosition(ARM_RIGHT_MAX);
+                    robot.armLeft.setPosition(ARM_LEFT_MAX);
                     rightButton.resetToggles();
                 }
             }
@@ -158,6 +165,7 @@ public class MainDrivingOp extends LinearOpMode {
                     leftButton.resetToggles();
                     rightButton.resetToggles();
                     robot.armRight.setPosition(ARM_RIGHT_MAX);
+                   // robot.armLeft.setPosition(ARM_LEFT_MAX);
 
                     try {
                         Thread.sleep(350);
@@ -172,10 +180,13 @@ public class MainDrivingOp extends LinearOpMode {
                         robot.claw.setPosition(CLAW_CLOSE);
                         Thread.sleep(300);
                         robot.armRight.setPosition(ARM_RIGHT_TEST);
+                        //robot.armLeft.setPosition(ARM_LEFT_TEST);
                         Thread.sleep(300);
                         robot.armRight.setPosition(ARM_RIGHT_MAX);
+                        //robot.armLeft.setPosition(ARM_LEFT_MAX);
                         Thread.sleep(300);
                         robot.armRight.setPosition(ARM_RIGHT_INT);
+                        //robot.armLeft.setPosition(ARM_LEFT_INT);
                         robot.intakeWheels.runContinuous(false, false);
 
                         Thread.sleep(200);

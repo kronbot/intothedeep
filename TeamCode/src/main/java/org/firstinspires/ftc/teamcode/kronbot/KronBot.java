@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.kronbot;
 
-import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_LEFT_START;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_LEFT_INT;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_LEFT_MAX;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_RIGHT_INT;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_RIGHT_MAX;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.SLIDE_MAX_LEFT;
@@ -69,9 +70,9 @@ public class KronBot {
         claw = hardwareMap.get(com.qualcomm.robotcore.hardware.Servo.class, "clawServo");
 
         armLeft = hardwareMap.get(com.qualcomm.robotcore.hardware.Servo.class, "armLeftServo");
-        armLeft.setDirection(com.qualcomm.robotcore.hardware.Servo.Direction.REVERSE);
-        armLeft.setPosition(ARM_LEFT_START);
         armRight = hardwareMap.get(com.qualcomm.robotcore.hardware.Servo.class, "armRightServo");
+        armLeft.setDirection(com.qualcomm.robotcore.hardware.Servo.Direction.REVERSE);
+        armLeft.setPosition(ARM_LEFT_MAX);
         armRight.setPosition(ARM_RIGHT_MAX);
 
         intakeWheels = new Servo(hardwareMap);
