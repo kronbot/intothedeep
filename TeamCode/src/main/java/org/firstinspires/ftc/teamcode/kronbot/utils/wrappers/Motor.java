@@ -49,8 +49,8 @@ public class Motor {
 
         if (motor.isBusy())
             motor.setPower(Constants.LIFT_POWER);
-//        else
-//            motor.setPower(0.1);
+        else
+            motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     boolean voltageCompensated = false;

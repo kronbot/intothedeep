@@ -23,15 +23,15 @@ public class LiftDriver {
     double kP = 0.005, kI = 0, kD = 0.0001;
     Motor liftMotor;
 
-    public void init(Motor liftMotor, boolean pid) {
+    public void init(Motor liftMotor, boolean pid, String name) {
         this.liftMotor = liftMotor;
-        this.liftMotor.init("liftMotor", false, pid, true, true, true, true);
+        this.liftMotor.init(name, false, pid, true, true, true, true);
         if (pid) {
             liftMotor.holdMode(true);
             liftMotor.setTolerance(LIFT_TOLERANCE);
             liftMotor.setPositionPID(kP, kI, kD);
         }
-        runToPosition();
+        this.liftMotor.setTargetPosition(0);
     }
 
     public void run(double power) {
@@ -65,7 +65,7 @@ public class LiftDriver {
     }
 
     public void runToPosition() {
-        liftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//        liftMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
     public void runUsingEncoders() {

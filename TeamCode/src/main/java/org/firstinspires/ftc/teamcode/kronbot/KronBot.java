@@ -8,6 +8,7 @@ import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.SLIDE_MAX_L
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.SLIDE_MAX_RIGHT;
 
 import com.qualcomm.hardware.bosch.BHI260IMU;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -20,8 +21,10 @@ import org.firstinspires.ftc.teamcode.kronbot.utils.wrappers.Servo;
 public class KronBot {
     public MotorDriver motors;
 
-    public LiftDriver liftLeft;
-    public LiftDriver liftRight;
+//    public LiftDriver liftLeft;
+//    public LiftDriver liftRight;
+    public com.qualcomm.robotcore.hardware.DcMotorEx liftMotorLeft;
+    public com.qualcomm.robotcore.hardware.DcMotorEx liftMotorRight;
 
     public com.qualcomm.robotcore.hardware.Servo armLeft;
     public com.qualcomm.robotcore.hardware.Servo armRight;
@@ -33,8 +36,6 @@ public class KronBot {
     public com.qualcomm.robotcore.hardware.Servo intakeSlideServoLeft;
     public com.qualcomm.robotcore.hardware.Servo intakeSlideServoRight;
 
-    public com.qualcomm.robotcore.hardware.DcMotor liftMotorLeft;
-    public com.qualcomm.robotcore.hardware.DcMotor liftMotorRight;
 
     public ControlHubGyroscope gyroscope;
 
@@ -55,18 +56,14 @@ public class KronBot {
     }
 
     public void initLift(HardwareMap hardwareMap) {
-        Motor liftMotorLeft = new Motor(hardwareMap);
-        liftLeft = new LiftDriver();
-        liftLeft.init(liftMotorLeft, false);
-        Motor liftMotorRight = new Motor(hardwareMap);
-        liftRight = new LiftDriver();
-        liftRight.init(liftMotorRight, true);
-
-//        liftMotorLeft = hardwareMap.get(com.qualcomm.robotcore.hardware.DcMotor.class, "liftMotorLeft");
-//        liftMotorLeft.setZeroPowerBehavior(com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior.BRAKE);
-////        liftMotorLeft.setDirection(com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.REVERSE);
-//        liftMotorRight = hardwareMap.get(com.qualcomm.robotcore.hardware.DcMotor.class, "liftMotorRight");
-//        liftMotorRight.setZeroPowerBehavior(com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior.BRAKE);
+        liftMotorLeft = (DcMotorEx) hardwareMap.get(com.qualcomm.robotcore.hardware.DcMotor.class, "liftMotorLeft");
+        liftMotorLeft.setZeroPowerBehavior(com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior.BRAKE);
+        liftMotorLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        liftMotorLeft.setMode(com.qualcomm.robotcore.hardware.DcMotor.RunMode.RUN_USING_ENCODER);
+        liftMotorRight = (DcMotorEx) hardwareMap.get(com.qualcomm.robotcore.hardware.DcMotor.class, "liftMotorRight");
+        liftMotorRight.setZeroPowerBehavior(com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior.BRAKE);
+        liftMotorRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        liftMotorRight.setMode(com.qualcomm.robotcore.hardware.DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     public void initServo(HardwareMap hardwareMap) {

@@ -13,6 +13,8 @@ import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.CLAW_OPEN;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.CONTROLLER_DEADZONE;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.INTAKE_MAX;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.INTAKE_MIN;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.LIFT_INIT_POSITION;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.LIFT_MAX_POSITION;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.LIFT_REST_POWER;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.LIFT_REVERSE_POWER;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.SLIDE_MAX_LEFT;
@@ -82,18 +84,16 @@ public class MainDrivingOp extends LinearOpMode {
 
         while (opModeIsActive() && !isStopRequested()) {
             // Lift
-          robot.liftLeft.run(utilityGamepad.right_trigger - utilityGamepad.left_trigger);
-          robot.liftRight.run(utilityGamepad.right_trigger - utilityGamepad.left_trigger);
-//            if (utilityGamepad.right_trigger > CONTROLLER_DEADZONE) {
-//                robot.liftMotorLeft.setPower(-utilityGamepad.right_trigger);
-//                robot.liftMotorRight.setPower(-utilityGamepad.right_trigger);
-//            } else if (utilityGamepad.left_trigger > CONTROLLER_DEADZONE) {
-//                robot.liftMotorLeft.setPower(utilityGamepad.left_trigger * LIFT_REVERSE_POWER);
-//                robot.liftMotorRight.setPower(utilityGamepad.left_trigger * LIFT_REVERSE_POWER);
-//            } else {
-//                robot.liftMotorLeft.setPower(-LIFT_REST_POWER);
-//                robot.liftMotorRight.setPower(-LIFT_REST_POWER);
-//            }
+            if (utilityGamepad.right_trigger > CONTROLLER_DEADZONE && robot.liftMotorLeft.getCurrentPosition() < LIFT_MAX_POSITION) {
+                robot.liftMotorLeft.setPower(-utilityGamepad.right_trigger);
+                robot.liftMotorRight.setPower(-utilityGamepad.right_trigger);
+            } else if (utilityGamepad.left_trigger > CONTROLLER_DEADZONE && robot.liftMotorLeft.getCurrentPosition() > LIFT_INIT_POSITION) {
+                robot.liftMotorLeft.setPower(utilityGamepad.left_trigger * LIFT_REVERSE_POWER);
+                robot.liftMotorRight.setPower(utilityGamepad.left_trigger * LIFT_REVERSE_POWER);
+            } else {
+                robot.liftMotorLeft.setPower(-LIFT_REST_POWER);
+                robot.liftMotorRight.setPower(-LIFT_REST_POWER);
+            }
 
             if (!waiting.get()) {
                 // Intake Sliders
