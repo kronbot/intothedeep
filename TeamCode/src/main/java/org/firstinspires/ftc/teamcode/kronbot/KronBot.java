@@ -4,6 +4,7 @@ import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_LEFT_IN
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_LEFT_MAX;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_RIGHT_INT;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_RIGHT_MAX;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.INTAKE_MAX_LEFT;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.SLIDE_MAX_LEFT;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.SLIDE_MAX_RIGHT;
 
@@ -21,16 +22,17 @@ import org.firstinspires.ftc.teamcode.kronbot.utils.wrappers.Servo;
 public class KronBot {
     public MotorDriver motors;
 
-//    public LiftDriver liftLeft;
-//    public LiftDriver liftRight;
-    public com.qualcomm.robotcore.hardware.DcMotorEx liftMotorLeft;
-    public com.qualcomm.robotcore.hardware.DcMotorEx liftMotorRight;
+    public LiftDriver liftLeft;
+    public LiftDriver liftRight;
+   // public com.qualcomm.robotcore.hardware.DcMotorEx liftMotorLeft;
+   // public com.qualcomm.robotcore.hardware.DcMotorEx liftMotorRight;
 
     public com.qualcomm.robotcore.hardware.Servo armLeft;
     public com.qualcomm.robotcore.hardware.Servo armRight;
     public com.qualcomm.robotcore.hardware.Servo claw;
 
-    public Servo intakeWheels;
+    public Servo intakeWheelsRight;
+    public Servo intakeWheelsLeft;
     public com.qualcomm.robotcore.hardware.Servo intakeServoLeft;
     public com.qualcomm.robotcore.hardware.Servo intakeServoRight;
     public com.qualcomm.robotcore.hardware.Servo intakeSlideServoLeft;
@@ -56,14 +58,10 @@ public class KronBot {
     }
 
     public void initLift(HardwareMap hardwareMap) {
-        liftMotorLeft = (DcMotorEx) hardwareMap.get(com.qualcomm.robotcore.hardware.DcMotor.class, "liftMotorLeft");
-        liftMotorLeft.setZeroPowerBehavior(com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior.BRAKE);
-        liftMotorLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        liftMotorLeft.setMode(com.qualcomm.robotcore.hardware.DcMotor.RunMode.RUN_USING_ENCODER);
-        liftMotorRight = (DcMotorEx) hardwareMap.get(com.qualcomm.robotcore.hardware.DcMotor.class, "liftMotorRight");
-        liftMotorRight.setZeroPowerBehavior(com.qualcomm.robotcore.hardware.DcMotor.ZeroPowerBehavior.BRAKE);
-        liftMotorRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        liftMotorRight.setMode(com.qualcomm.robotcore.hardware.DcMotor.RunMode.RUN_USING_ENCODER);
+        liftLeft = new LiftDriver();
+        liftRight = new LiftDriver();
+        liftLeft.init(new Motor(hardwareMap), true, "liftMotorLeft");
+        liftRight.init(new Motor(hardwareMap), true, "liftMotorRight");
     }
 
     public void initServo(HardwareMap hardwareMap) {
@@ -75,15 +73,22 @@ public class KronBot {
         armLeft.setPosition(ARM_LEFT_MAX);
         armRight.setPosition(ARM_RIGHT_MAX);
 
-        intakeWheels = new Servo(hardwareMap);
-        intakeWheels.init("intake", true, false, 0, 0, 0);
+        intakeWheelsRight = new Servo(hardwareMap);
+        intakeWheelsRight.init("intake", true, false, 0, 0, 0);
 
-        intakeServoLeft = hardwareMap.get(com.qualcomm.robotcore.hardware.Servo.class, "intakeSlideLeft");
-        intakeServoRight = hardwareMap.get(com.qualcomm.robotcore.hardware.Servo.class, "intakeSlideRight");
+        intakeWheelsLeft = new Servo(hardwareMap);
+        intakeWheelsLeft.init("intake2", true, false, 0, 0, 0);
+        intakeWheelsLeft.setReversed(true);
 
-        intakeSlideServoLeft = hardwareMap.get(com.qualcomm.robotcore.hardware.Servo.class, "intakeLeft");
+        intakeServoLeft = hardwareMap.get(com.qualcomm.robotcore.hardware.Servo.class, "intakeLeft");
+        intakeServoLeft.setPosition(INTAKE_MAX_LEFT);
+        intakeServoRight = hardwareMap.get(com.qualcomm.robotcore.hardware.Servo.class, "intakeRight");
+        intakeServoRight.setPosition(INTAKE_MAX_LEFT);
+
+        intakeSlideServoLeft = hardwareMap.get(com.qualcomm.robotcore.hardware.Servo.class, "intakeSlideLeft");
         intakeSlideServoLeft.setPosition(SLIDE_MAX_LEFT);
-        intakeSlideServoRight = hardwareMap.get(com.qualcomm.robotcore.hardware.Servo.class, "intakeRight");
+        intakeSlideServoLeft.setDirection(com.qualcomm.robotcore.hardware.Servo.Direction.REVERSE);
+        intakeSlideServoRight = hardwareMap.get(com.qualcomm.robotcore.hardware.Servo.class, "intakeSlideRight");
         intakeSlideServoRight.setPosition(SLIDE_MAX_RIGHT);
     }
 
@@ -105,5 +110,4 @@ public class KronBot {
         initIMU(hardwareMap);
         initMotors(hardwareMap);
     }
-
 }

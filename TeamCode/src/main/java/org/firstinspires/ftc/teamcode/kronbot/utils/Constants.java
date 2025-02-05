@@ -22,7 +22,7 @@ public class Constants {
     public static double POWER_EXPONENT = 2.0;
 
     public static double LIFT_POWER = 1.0; //?
-    public static double LIFT_REST_POWER = 0.06;
+    public static double LIFT_REST_POWER = 0;
     public static double LIFT_REVERSE_POWER = 0.75; //?
     public static double LIFT_TOLERANCE = 50;
     public static int   LIFT_INIT_POSITION = 0 ;
@@ -46,12 +46,14 @@ public class Constants {
     public static double CLAW_CLOSE = 0.45;
     public static double CLAW_OPEN = 0.23;
 
-    public static double INTAKE_MIN = 0.02;
-    public static double INTAKE_MAX = 0.55;
+    public static double INTAKE_MIN_LEFT = 0.02;
+    public static double INTAKE_MAX_LEFT = 0.55;
+    public static double INTAKE_MIN_RIGHT = 0.02;
+    public static double INTAKE_MAX_RIGHT = 0.55;
 
     public static double SLIDE_MIN_LEFT = 0;
     public static double SLIDE_MAX_LEFT = 1;
-    public static double SLIDE_MIN_RIGHT = 0.7;
+    public static double SLIDE_MIN_RIGHT = 0;
     public static double SLIDE_MAX_RIGHT = 1;
 
     public static LogoFacingDirection LOGO_FACING_DIRECTION = LogoFacingDirection.RIGHT;

@@ -11,8 +11,10 @@ import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_RIGHT_T
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.CLAW_CLOSE;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.CLAW_OPEN;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.CONTROLLER_DEADZONE;
-import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.INTAKE_MAX;
-import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.INTAKE_MIN;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.INTAKE_MAX_LEFT;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.INTAKE_MAX_RIGHT;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.INTAKE_MIN_LEFT;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.INTAKE_MIN_RIGHT;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.LIFT_INIT_POSITION;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.LIFT_MAX_POSITION;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.LIFT_REST_POWER;
@@ -84,16 +86,8 @@ public class MainDrivingOp extends LinearOpMode {
 
         while (opModeIsActive() && !isStopRequested()) {
             // Lift
-            if (utilityGamepad.right_trigger > CONTROLLER_DEADZONE && robot.liftMotorLeft.getCurrentPosition() < LIFT_MAX_POSITION) {
-                robot.liftMotorLeft.setPower(-utilityGamepad.right_trigger);
-                robot.liftMotorRight.setPower(-utilityGamepad.right_trigger);
-            } else if (utilityGamepad.left_trigger > CONTROLLER_DEADZONE && robot.liftMotorLeft.getCurrentPosition() > LIFT_INIT_POSITION) {
-                robot.liftMotorLeft.setPower(utilityGamepad.left_trigger * LIFT_REVERSE_POWER);
-                robot.liftMotorRight.setPower(utilityGamepad.left_trigger * LIFT_REVERSE_POWER);
-            } else {
-                robot.liftMotorLeft.setPower(-LIFT_REST_POWER);
-                robot.liftMotorRight.setPower(-LIFT_REST_POWER);
-            }
+           // robot.liftLeft.run(utilityGamepad.right_trigger - utilityGamepad.left_trigger);
+            //robot.liftRight.run(utilityGamepad.right_trigger - utilityGamepad.left_trigger);
 
             if (!waiting.get()) {
                 // Intake Sliders
@@ -107,17 +101,19 @@ public class MainDrivingOp extends LinearOpMode {
                     robot.intakeSlideServoRight.setPosition(robot.intakeSlideServoRight.getPosition() - increment);
 
                 //intake Wheels
-                robot.intakeWheels.runContinuous(utilityGamepad.right_stick_y < -CONTROLLER_DEADZONE, utilityGamepad.right_stick_y > CONTROLLER_DEADZONE);
+                robot.intakeWheelsRight.runContinuous(utilityGamepad.right_stick_y < -CONTROLLER_DEADZONE, utilityGamepad.right_stick_y > CONTROLLER_DEADZONE);
+                robot.intakeWheelsRight.runContinuous(utilityGamepad.right_stick_y < -CONTROLLER_DEADZONE, utilityGamepad.right_stick_y > CONTROLLER_DEADZONE);
+
 
                 // Intake Hand
                 intakeButton.updateButton(utilityGamepad.triangle);
                 intakeButton.shortPress();
                 if (intakeButton.getShortToggle()) {
-                    robot.intakeServoRight.setPosition(INTAKE_MIN);
-                    robot.intakeServoLeft.setPosition(INTAKE_MIN);
+                    robot.intakeServoRight.setPosition(INTAKE_MIN_RIGHT);
+                    robot.intakeServoLeft.setPosition(INTAKE_MIN_LEFT);
                 } else {
-                    robot.intakeServoRight.setPosition(INTAKE_MAX);
-                    robot.intakeServoLeft.setPosition(INTAKE_MAX);
+                    robot.intakeServoRight.setPosition(INTAKE_MAX_RIGHT);
+                    robot.intakeServoLeft.setPosition(INTAKE_MAX_LEFT);
                 }
 
                 // Claw
@@ -170,8 +166,10 @@ public class MainDrivingOp extends LinearOpMode {
                     try {
                         Thread.sleep(350);
                         intakeButton.resetToggles();
-                        robot.intakeServoRight.setPosition(INTAKE_MAX);
+                        robot.intakeServoRight.setPosition(INTAKE_MAX_RIGHT);
+                        robot.intakeServoLeft.setPosition(INTAKE_MAX_LEFT);
                         robot.intakeSlideServoRight.setPosition(SLIDE_MAX_RIGHT);
+                        robot.intakeSlideServoLeft.setPosition(SLIDE_MAX_LEFT);
 
                         clawButton.resetToggles();
                         robot.claw.setPosition(CLAW_OPEN);
@@ -184,7 +182,8 @@ public class MainDrivingOp extends LinearOpMode {
                         robot.armLeft.setPosition(ARM_LEFT_MAX);
 
                         Thread.sleep(800);
-                        robot.intakeWheels.runContinuous(false, true);
+                        robot.intakeWheelsRight.runContinuous(false, true);
+                        robot.intakeWheelsLeft.runContinuous(false, true);
                         Thread.sleep(0);
 
                         robot.claw.setPosition(CLAW_CLOSE);
@@ -197,7 +196,8 @@ public class MainDrivingOp extends LinearOpMode {
                         Thread.sleep(300);
                         robot.armRight.setPosition(ARM_RIGHT_INT);
                         robot.armLeft.setPosition(ARM_LEFT_INT);
-                        robot.intakeWheels.runContinuous(false, false);
+                        robot.intakeWheelsRight.runContinuous(false, false);
+                        robot.intakeWheelsLeft.runContinuous(false, false);
 
                         Thread.sleep(200);
                         waiting.set(false);
