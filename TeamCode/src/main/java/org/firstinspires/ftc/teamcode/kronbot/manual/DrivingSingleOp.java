@@ -63,9 +63,7 @@ public class DrivingSingleOp extends LinearOpMode {
         Button clawButton = new Button();
 
         // Arm
-        Button leftButton = new Button();
-        Button topButton = new Button();
-        Button rightButton = new Button();
+        Button armButton = new Button();
 
         // Actions
         Button retractButton = new Button();
@@ -89,46 +87,27 @@ public class DrivingSingleOp extends LinearOpMode {
                 robot.intakeWheelsLeft.runContinuous(gamepad.dpad_down, false);
 
                 // Claw
-                clawButton.updateButton(gamepad.circle);
+                clawButton.updateButton(gamepad.dpad_right);
                 clawButton.shortPress();
                 if (clawButton.getShortToggle())
                     robot.claw.setPosition(CLAW_OPEN);
                 else robot.claw.setPosition(CLAW_CLOSE);
 
                 // Arm
-                leftButton.updateButton(gamepad.dpad_left);
-                leftButton.shortPress();
-                topButton.updateButton(gamepad.dpad_up);
-                topButton.shortPress();
-                rightButton.updateButton(gamepad.dpad_right);
-                rightButton.shortPress();
-                if (leftButton.getShortToggle()) {
+                armButton.updateButton(gamepad.dpad_up);
+                armButton.shortPress();
+                if (armButton.getShortToggle()) {
                     robot.armRight.setPosition(ARM_RIGHT_MAX);
                     robot.armLeft.setPosition(ARM_LEFT_MAX);
-                    leftButton.resetToggles();
-                } else if (topButton.getShortToggle()) {
-                    robot.armRight.setPosition(ARM_RIGHT_INT);
-                    robot.armLeft.setPosition(ARM_LEFT_INT);
-                    topButton.resetToggles();
-                } else if (rightButton.getShortToggle()) {
+                } else {
                     robot.armRight.setPosition(ARM_RIGHT_MIN);
                     robot.armLeft.setPosition(ARM_LEFT_MIN);
-                    rightButton.resetToggles();
                 }
             }
 
             // Extension
             extensionButton.updateButton(gamepad.circle);
             extensionButton.shortPress();
-            if (extensionButton.getShortToggle()) {
-                telemetry.addLine("Dwadaw");
-                robot.intakeServoRight.setPosition(INTAKE_RIGHT_MAX);
-                robot.intakeServoLeft.setPosition(INTAKE_LEFT_MAX);
-            } else {
-                telemetry.addLine("12331321");
-                robot.intakeServoRight.setPosition(INTAKE_RIGHT_MIN);
-                robot.intakeServoLeft.setPosition(INTAKE_LEFT_MIN);
-            }
             if (extensionButton.getShortToggle() && !waitingExtension.get() && !waitingRetraction.get()) {
                 new Thread(() -> {
                     waitingExtension.set(true);
@@ -180,9 +159,7 @@ public class DrivingSingleOp extends LinearOpMode {
                         robot.claw.setPosition(CLAW_OPEN);
 
                         Thread.sleep(350);
-                        topButton.resetToggles();
-                        leftButton.resetToggles();
-                        rightButton.resetToggles();
+                        armButton.resetToggles();
                         robot.armRight.setPosition(ARM_RIGHT_MIN);
                         robot.armLeft.setPosition(ARM_LEFT_MIN);
 

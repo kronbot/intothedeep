@@ -43,9 +43,9 @@ public class Constants {
     public static double CLAW_CLOSE = 0.45;
     public static double CLAW_OPEN = 0.23;
 
-    public static double INTAKE_LEFT_MIN = 0.20;
+    public static double INTAKE_LEFT_MIN = 0.15;
     public static double INTAKE_LEFT_MAX = 0.80;
-    public static double INTAKE_RIGHT_MIN = 0.20;
+    public static double INTAKE_RIGHT_MIN = 0.15;
     public static double INTAKE_RIGHT_MAX = 0.80;
 
     public static double SLIDE_LEFT_CLOSED = 0.26;
