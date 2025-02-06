@@ -1,15 +1,12 @@
 package org.firstinspires.ftc.teamcode.kronbot;
 
-import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_LEFT_INT;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_LEFT_MAX;
-import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_RIGHT_INT;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_RIGHT_MAX;
-import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.INTAKE_MAX_LEFT;
-import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.SLIDE_MAX_LEFT;
-import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.SLIDE_MAX_RIGHT;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.INTAKE_LEFT_MAX;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.SLIDE_LEFT_CLOSED;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.SLIDE_RIGHT_CLOSED;
 
 import com.qualcomm.hardware.bosch.BHI260IMU;
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -24,8 +21,6 @@ public class KronBot {
 
     public LiftDriver liftLeft;
     public LiftDriver liftRight;
-   // public com.qualcomm.robotcore.hardware.DcMotorEx liftMotorLeft;
-   // public com.qualcomm.robotcore.hardware.DcMotorEx liftMotorRight;
 
     public com.qualcomm.robotcore.hardware.Servo armLeft;
     public com.qualcomm.robotcore.hardware.Servo armRight;
@@ -37,7 +32,6 @@ public class KronBot {
     public com.qualcomm.robotcore.hardware.Servo intakeServoRight;
     public com.qualcomm.robotcore.hardware.Servo intakeSlideServoLeft;
     public com.qualcomm.robotcore.hardware.Servo intakeSlideServoRight;
-
 
     public ControlHubGyroscope gyroscope;
 
@@ -75,21 +69,20 @@ public class KronBot {
 
         intakeWheelsRight = new Servo(hardwareMap);
         intakeWheelsRight.init("intake", true, false, 0, 0, 0);
-
         intakeWheelsLeft = new Servo(hardwareMap);
         intakeWheelsLeft.init("intake2", true, false, 0, 0, 0);
         intakeWheelsLeft.setReversed(true);
 
         intakeServoLeft = hardwareMap.get(com.qualcomm.robotcore.hardware.Servo.class, "intakeLeft");
-        intakeServoLeft.setPosition(INTAKE_MAX_LEFT);
+        intakeServoLeft.setPosition(INTAKE_LEFT_MAX);
         intakeServoRight = hardwareMap.get(com.qualcomm.robotcore.hardware.Servo.class, "intakeRight");
-        intakeServoRight.setPosition(INTAKE_MAX_LEFT);
+        intakeServoRight.setPosition(INTAKE_LEFT_MAX);
 
         intakeSlideServoLeft = hardwareMap.get(com.qualcomm.robotcore.hardware.Servo.class, "intakeSlideLeft");
-        intakeSlideServoLeft.setPosition(SLIDE_MAX_LEFT);
+        intakeSlideServoLeft.setPosition(SLIDE_LEFT_CLOSED);
         intakeSlideServoLeft.setDirection(com.qualcomm.robotcore.hardware.Servo.Direction.REVERSE);
         intakeSlideServoRight = hardwareMap.get(com.qualcomm.robotcore.hardware.Servo.class, "intakeSlideRight");
-        intakeSlideServoRight.setPosition(SLIDE_MAX_RIGHT);
+        intakeSlideServoRight.setPosition(SLIDE_RIGHT_CLOSED);
     }
 
     public void initAutonomy(HardwareMap hardwareMap) {
