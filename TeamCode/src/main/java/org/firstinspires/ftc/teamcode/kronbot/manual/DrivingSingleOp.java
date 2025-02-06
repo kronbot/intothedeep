@@ -85,8 +85,8 @@ public class DrivingSingleOp extends LinearOpMode {
                 robot.liftRight.run(gamepad.right_trigger - gamepad.left_trigger);
 
                 // Intake Wheels
-                robot.intakeWheelsRight.runContinuous(gamepad.dpad_down, false);
-                robot.intakeWheelsRight.runContinuous(gamepad.dpad_down, false);
+                robot.intakeWheelsRight.runContinuous(false, gamepad.dpad_down);
+                robot.intakeWheelsLeft.runContinuous(gamepad.dpad_down, false);
 
                 // Claw
                 clawButton.updateButton(gamepad.circle);
@@ -120,7 +120,16 @@ public class DrivingSingleOp extends LinearOpMode {
             // Extension
             extensionButton.updateButton(gamepad.circle);
             extensionButton.shortPress();
-            if (extensionButton.getShortToggle() && !waitingExtension.get()  && !waitingRetraction.get()) {
+            if (extensionButton.getShortToggle()) {
+                telemetry.addLine("Dwadaw");
+                robot.intakeServoRight.setPosition(INTAKE_RIGHT_MAX);
+                robot.intakeServoLeft.setPosition(INTAKE_LEFT_MAX);
+            } else {
+                telemetry.addLine("12331321");
+                robot.intakeServoRight.setPosition(INTAKE_RIGHT_MIN);
+                robot.intakeServoLeft.setPosition(INTAKE_LEFT_MIN);
+            }
+            if (extensionButton.getShortToggle() && !waitingExtension.get() && !waitingRetraction.get()) {
                 new Thread(() -> {
                     waitingExtension.set(true);
 
@@ -179,7 +188,7 @@ public class DrivingSingleOp extends LinearOpMode {
 
                         Thread.sleep(800);
                         robot.intakeWheelsRight.runContinuous(false, true);
-                        robot.intakeWheelsLeft.runContinuous(false, true);
+                        robot.intakeWheelsLeft.runContinuous(true, false);
                         Thread.sleep(0);
 
                         robot.claw.setPosition(CLAW_CLOSE);

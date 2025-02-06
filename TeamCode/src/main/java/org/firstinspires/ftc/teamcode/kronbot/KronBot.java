@@ -69,9 +69,9 @@ public class KronBot {
         armRight.setPosition(ARM_RIGHT_MIN);
 
         intakeWheelsRight = new Servo(hardwareMap);
-        intakeWheelsRight.init("intake", true, false, 0, 0, 0);
+        intakeWheelsRight.init("intake2", true, false, 0, 0, 0);
         intakeWheelsLeft = new Servo(hardwareMap);
-        intakeWheelsLeft.init("intake2", true, false, 0, 0, 0);
+        intakeWheelsLeft.init("intake", true, false, 0, 0, 0);
         intakeWheelsLeft.setReversed(true);
 
         intakeServoLeft = hardwareMap.get(com.qualcomm.robotcore.hardware.Servo.class, "intakeLeft");
