@@ -122,7 +122,7 @@ public class DrivingDualOp extends LinearOpMode {
             // Extension
             extensionButton.updateButton(utilityGamepad.circle);
             extensionButton.shortPress();
-            if (extensionButton.getShortToggle() && !waitingExtension.get()  && !waitingRetraction.get()) {
+            if (extensionButton.getShortToggle() && !waitingExtension.get() && !waitingRetraction.get()) {
                 new Thread(() -> {
                     waitingExtension.set(true);
 

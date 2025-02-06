@@ -55,8 +55,8 @@ public class KronBot {
     public void initLift(HardwareMap hardwareMap) {
         liftLeft = new LiftDriver();
         liftRight = new LiftDriver();
-        liftLeft.init(new Motor(hardwareMap), true, "liftMotorLeft");
-        liftRight.init(new Motor(hardwareMap), true, "liftMotorRight");
+        liftLeft.init(new Motor(hardwareMap), true, "liftMotorLeft", false);
+        liftRight.init(new Motor(hardwareMap), true, "liftMotorRight", true );
     }
 
     public void initServo(HardwareMap hardwareMap) {

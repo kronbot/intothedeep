@@ -81,10 +81,20 @@ public class DrivingSingleOp extends LinearOpMode {
                 // Lift
                 robot.liftLeft.run(gamepad.right_trigger - gamepad.left_trigger);
                 robot.liftRight.run(gamepad.right_trigger - gamepad.left_trigger);
+                telemetry.addData("Left", robot.liftLeft.getCurrentPosition());
+                telemetry.addData("Right", robot.liftRight.getCurrentPosition());
 
                 // Intake Wheels
-                robot.intakeWheelsRight.runContinuous(false, gamepad.dpad_down);
-                robot.intakeWheelsLeft.runContinuous(gamepad.dpad_down, false);
+                if (gamepad.dpad_down) {
+                    robot.intakeWheelsRight.runContinuous(false, gamepad.dpad_down);
+                    robot.intakeWheelsLeft.runContinuous(gamepad.dpad_down, false);
+                } else if (robot.intakeServoLeft.getPosition() == INTAKE_LEFT_MAX) {
+                    robot.intakeWheelsRight.runContinuous(true, false);
+                    robot.intakeWheelsLeft.runContinuous(false, true);
+                }else if (robot.intakeServoLeft.getPosition() == INTAKE_LEFT_MIN) {
+                    robot.intakeWheelsRight.runContinuous(false, true);
+                    robot.intakeWheelsLeft.runContinuous(true, false);
+                }
 
                 // Claw
                 clawButton.updateButton(gamepad.dpad_right);
@@ -121,15 +131,12 @@ public class DrivingSingleOp extends LinearOpMode {
                         Thread.sleep(350);
                         robot.intakeServoRight.setPosition(INTAKE_RIGHT_MAX);
                         robot.intakeServoLeft.setPosition(INTAKE_LEFT_MAX);
-
-                        robot.intakeWheelsRight.runContinuous(true, false);
-                        robot.intakeWheelsLeft.runContinuous(true, false);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
 
                     waitingExtension.set(false);
-                });
+                }).start();
             }
 
             // Retraction
@@ -164,7 +171,7 @@ public class DrivingSingleOp extends LinearOpMode {
                         robot.armLeft.setPosition(ARM_LEFT_MIN);
 
                         Thread.sleep(800);
-                        robot.intakeWheelsRight.runContinuous(false, true);
+                        robot.intakeWheelsRight.runContinuous(false, false);
                         robot.intakeWheelsLeft.runContinuous(true, false);
                         Thread.sleep(0);
 

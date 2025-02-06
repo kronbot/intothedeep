@@ -23,9 +23,9 @@ public class LiftDriver {
     double kP = 0.005, kI = 0, kD = 0.0001;
     Motor liftMotor;
 
-    public void init(Motor liftMotor, boolean pid, String name) {
+    public void init(Motor liftMotor, boolean pid, String name, boolean reversed) {
         this.liftMotor = liftMotor;
-        this.liftMotor.init(name, false, pid, true, true, true, true);
+        this.liftMotor.init(name, reversed, pid, true, true, true, true);
         if (pid) {
             liftMotor.holdMode(true);
             liftMotor.setTolerance(LIFT_TOLERANCE);

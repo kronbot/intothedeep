@@ -37,6 +37,8 @@ public class Motor {
 
         if (!encoder)
             motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        else
+            motor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         this.setBrakes(brakes);
     }
@@ -165,5 +167,10 @@ public class Motor {
 
     public int getTargetPosition() {
         return motor.getTargetPosition();
+    }
+
+    public void setReversed(boolean reversed) {
+        if (reversed)
+            motor.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 }
