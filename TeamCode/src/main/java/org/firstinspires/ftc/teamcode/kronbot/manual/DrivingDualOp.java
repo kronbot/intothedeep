@@ -34,7 +34,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  *
  * @version 1.0
  */
-@TeleOp(name = "Driving Dual", group = Constants.MAIN_GROUP)
+@TeleOp(name = "Dual Driving", group = Constants.MAIN_GROUP)
 public class DrivingDualOp extends LinearOpMode {
     private final KronBot robot = new KronBot();
 
@@ -54,8 +54,8 @@ public class DrivingDualOp extends LinearOpMode {
         drivingGamepad = gamepad1;
         utilityGamepad = gamepad2;
 
-        robotCentricDrive = new RobotCentricDrive(robot, drivingGamepad);
-        fieldCentricDrive = new FieldCentricDrive(robot, drivingGamepad);
+        robotCentricDrive = new RobotCentricDrive(robot, gamepad);
+        fieldCentricDrive = new FieldCentricDrive(robot, gamepad);
 
         // Wheels
         Button driveModeButton = new Button();
@@ -65,9 +65,7 @@ public class DrivingDualOp extends LinearOpMode {
         Button clawButton = new Button();
 
         // Arm
-        Button leftButton = new Button();
-        Button topButton = new Button();
-        Button rightButton = new Button();
+        Button armButton = new Button();
 
         // Actions
         Button retractButton = new Button();
@@ -81,69 +79,50 @@ public class DrivingDualOp extends LinearOpMode {
         if (isStopRequested()) return;
 
         while (opModeIsActive() && !isStopRequested()) {
-            if (!waitingRetraction.get() && !waitingExtension.get()) {
+            if (!waitingRetraction.get()) {
                 // Lift
                 robot.liftLeft.run(utilityGamepad.right_trigger - utilityGamepad.left_trigger);
                 robot.liftRight.run(utilityGamepad.right_trigger - utilityGamepad.left_trigger);
 
                 // Intake Wheels
-                robot.intakeWheelsRight.runContinuous(utilityGamepad.dpad_down, false);
-                robot.intakeWheelsRight.runContinuous(utilityGamepad.dpad_down, false);
+                if (utilityGamepad.dpad_down) {
+                    robot.intakeWheelsRight.runContinuous(false, utilityGamepad.dpad_down);
+                    robot.intakeWheelsLeft.runContinuous(utilityGamepad.dpad_down, false);
+                }
 
                 // Claw
-                clawButton.updateButton(utilityGamepad.circle);
+                clawButton.updateButton(utilityGamepad.dpad_right);
                 clawButton.shortPress();
                 if (clawButton.getShortToggle())
                     robot.claw.setPosition(CLAW_OPEN);
                 else robot.claw.setPosition(CLAW_CLOSE);
 
                 // Arm
-                leftButton.updateButton(utilityGamepad.dpad_left);
-                leftButton.shortPress();
-                topButton.updateButton(utilityGamepad.dpad_up);
-                topButton.shortPress();
-                rightButton.updateButton(utilityGamepad.dpad_right);
-                rightButton.shortPress();
-                if (leftButton.getShortToggle()) {
+                armButton.updateButton(utilityGamepad.dpad_up);
+                armButton.shortPress();
+                if (armButton.getShortToggle()) {
                     robot.armRight.setPosition(ARM_RIGHT_MAX);
                     robot.armLeft.setPosition(ARM_LEFT_MAX);
-                    leftButton.resetToggles();
-                } else if (topButton.getShortToggle()) {
-                    robot.armRight.setPosition(ARM_RIGHT_INT);
-                    robot.armLeft.setPosition(ARM_LEFT_INT);
-                    topButton.resetToggles();
-                } else if (rightButton.getShortToggle()) {
+                } else {
                     robot.armRight.setPosition(ARM_RIGHT_MIN);
                     robot.armLeft.setPosition(ARM_LEFT_MIN);
-                    rightButton.resetToggles();
                 }
-            }
 
-            // Extension
-            extensionButton.updateButton(utilityGamepad.circle);
-            extensionButton.shortPress();
-            if (extensionButton.getShortToggle() && !waitingExtension.get() && !waitingRetraction.get()) {
-                new Thread(() -> {
-                    waitingExtension.set(true);
-
-                    extensionButton.resetToggles();
-
+                // Extension
+                extensionButton.updateButton(utilityGamepad.circle);
+                extensionButton.shortPress();
+                if (extensionButton.getShortToggle()) {
                     robot.intakeSlideServoRight.setPosition(SLIDE_RIGHT_OPENED);
                     robot.intakeSlideServoLeft.setPosition(SLIDE_LEFT_OPENED);
 
-                    try {
-                        Thread.sleep(350);
-                        robot.intakeServoRight.setPosition(INTAKE_RIGHT_MAX);
-                        robot.intakeServoLeft.setPosition(INTAKE_LEFT_MAX);
+                    robot.intakeServoRight.setPosition(INTAKE_RIGHT_MAX);
+                    robot.intakeServoLeft.setPosition(INTAKE_LEFT_MAX);
 
+                    if (!utilityGamepad.dpad_down) {
                         robot.intakeWheelsRight.runContinuous(true, false);
-                        robot.intakeWheelsLeft.runContinuous(true, false);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                        robot.intakeWheelsLeft.runContinuous(false, true);
                     }
-
-                    waitingExtension.set(false);
-                });
+                }
             }
 
             // Retraction
@@ -162,6 +141,10 @@ public class DrivingDualOp extends LinearOpMode {
                     robot.claw.setPosition(CLAW_OPEN);
 
                     try {
+                        armButton.resetToggles();
+                        robot.armRight.setPosition(ARM_RIGHT_MIN);
+                        robot.armLeft.setPosition(ARM_LEFT_MIN);
+
                         Thread.sleep(350);
                         robot.intakeServoRight.setPosition(INTAKE_RIGHT_MIN);
                         robot.intakeServoLeft.setPosition(INTAKE_LEFT_MIN);
@@ -169,29 +152,19 @@ public class DrivingDualOp extends LinearOpMode {
                         robot.intakeSlideServoRight.setPosition(SLIDE_RIGHT_CLOSED);
                         robot.intakeSlideServoLeft.setPosition(SLIDE_LEFT_CLOSED);
 
-                        clawButton.resetToggles();
-                        robot.claw.setPosition(CLAW_OPEN);
-
-                        Thread.sleep(350);
-                        topButton.resetToggles();
-                        leftButton.resetToggles();
-                        rightButton.resetToggles();
-                        robot.armRight.setPosition(ARM_RIGHT_MIN);
-                        robot.armLeft.setPosition(ARM_LEFT_MIN);
-
                         Thread.sleep(800);
-                        robot.intakeWheelsRight.runContinuous(false, true);
-                        robot.intakeWheelsLeft.runContinuous(false, true);
-                        Thread.sleep(0);
+                        robot.intakeWheelsRight.runContinuous(false, false);
+                        robot.intakeWheelsLeft.runContinuous(true, false);
 
+                        Thread.sleep(100);
                         robot.claw.setPosition(CLAW_CLOSE);
 
                         Thread.sleep(300);
                         robot.intakeWheelsRight.runContinuous(false, false);
                         robot.intakeWheelsLeft.runContinuous(false, false);
 
-                        robot.armRight.setPosition(ARM_RIGHT_INT);
-                        robot.armLeft.setPosition(ARM_LEFT_INT);
+                        robot.armRight.setPosition(ARM_RIGHT_MAX);
+                        robot.armLeft.setPosition(ARM_LEFT_MAX);
 
                     } catch (InterruptedException e) {
                         e.printStackTrace();
