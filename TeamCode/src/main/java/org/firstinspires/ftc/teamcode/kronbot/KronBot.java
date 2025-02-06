@@ -1,8 +1,9 @@
 package org.firstinspires.ftc.teamcode.kronbot;
 
-import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_LEFT_MAX;
-import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_RIGHT_MAX;
-import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.INTAKE_LEFT_MAX;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_LEFT_MIN;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_RIGHT_MIN;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.INTAKE_LEFT_MIN;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.INTAKE_RIGHT_MIN;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.SLIDE_LEFT_CLOSED;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.SLIDE_RIGHT_CLOSED;
 
@@ -64,8 +65,8 @@ public class KronBot {
         armLeft = hardwareMap.get(com.qualcomm.robotcore.hardware.Servo.class, "armLeftServo");
         armRight = hardwareMap.get(com.qualcomm.robotcore.hardware.Servo.class, "armRightServo");
         armLeft.setDirection(com.qualcomm.robotcore.hardware.Servo.Direction.REVERSE);
-        armLeft.setPosition(ARM_LEFT_MAX);
-        armRight.setPosition(ARM_RIGHT_MAX);
+        armLeft.setPosition(ARM_LEFT_MIN);
+        armRight.setPosition(ARM_RIGHT_MIN);
 
         intakeWheelsRight = new Servo(hardwareMap);
         intakeWheelsRight.init("intake", true, false, 0, 0, 0);
@@ -74,9 +75,9 @@ public class KronBot {
         intakeWheelsLeft.setReversed(true);
 
         intakeServoLeft = hardwareMap.get(com.qualcomm.robotcore.hardware.Servo.class, "intakeLeft");
-        intakeServoLeft.setPosition(INTAKE_LEFT_MAX);
+        intakeServoLeft.setPosition(INTAKE_LEFT_MIN);
         intakeServoRight = hardwareMap.get(com.qualcomm.robotcore.hardware.Servo.class, "intakeRight");
-        intakeServoRight.setPosition(INTAKE_LEFT_MAX);
+        intakeServoRight.setPosition(INTAKE_RIGHT_MIN);
 
         intakeSlideServoLeft = hardwareMap.get(com.qualcomm.robotcore.hardware.Servo.class, "intakeSlideLeft");
         intakeSlideServoLeft.setPosition(SLIDE_LEFT_CLOSED);

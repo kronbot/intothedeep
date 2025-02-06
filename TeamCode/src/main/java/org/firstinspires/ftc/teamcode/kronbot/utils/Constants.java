@@ -32,13 +32,12 @@ public class Constants {
     public static int BLUE_HUE_LOW = 0;
     public static int BLUE_HUE_HIGH = 180;
 
-    public static double ARM_LEFT_MIN = 0.25;
-    public static double ARM_LEFT_MAX = 0.86;
+    public static double ARM_LEFT_MIN = 0.86;
+    public static double ARM_LEFT_MAX = 0.25;
     public static double ARM_LEFT_INT = 0.45;
 
-
-    public static double ARM_RIGHT_MIN = 0.25;
-    public static double ARM_RIGHT_MAX = 0.86;
+    public static double ARM_RIGHT_MIN = 0.86;
+    public static double ARM_RIGHT_MAX = 0.25;
     public static double ARM_RIGHT_INT = 0.45;
 
     public static double CLAW_CLOSE = 0.45;

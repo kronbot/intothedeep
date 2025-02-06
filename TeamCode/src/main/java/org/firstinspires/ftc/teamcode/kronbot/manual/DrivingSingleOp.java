@@ -1,11 +1,11 @@
 package org.firstinspires.ftc.teamcode.kronbot.manual;
 
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_LEFT_INT;
-import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_LEFT_MAX;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_LEFT_MIN;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_LEFT_MAX;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_RIGHT_INT;
-import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_RIGHT_MAX;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_RIGHT_MIN;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_RIGHT_MAX;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.CLAW_CLOSE;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.CLAW_OPEN;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.INTAKE_LEFT_MAX;
@@ -103,16 +103,16 @@ public class DrivingSingleOp extends LinearOpMode {
                 rightButton.updateButton(gamepad.dpad_right);
                 rightButton.shortPress();
                 if (leftButton.getShortToggle()) {
-                    robot.armRight.setPosition(ARM_RIGHT_MIN);
-                    robot.armLeft.setPosition(ARM_LEFT_MIN);
+                    robot.armRight.setPosition(ARM_RIGHT_MAX);
+                    robot.armLeft.setPosition(ARM_LEFT_MAX);
                     leftButton.resetToggles();
                 } else if (topButton.getShortToggle()) {
                     robot.armRight.setPosition(ARM_RIGHT_INT);
                     robot.armLeft.setPosition(ARM_LEFT_INT);
                     topButton.resetToggles();
                 } else if (rightButton.getShortToggle()) {
-                    robot.armRight.setPosition(ARM_RIGHT_MAX);
-                    robot.armLeft.setPosition(ARM_LEFT_MAX);
+                    robot.armRight.setPosition(ARM_RIGHT_MIN);
+                    robot.armLeft.setPosition(ARM_LEFT_MIN);
                     rightButton.resetToggles();
                 }
             }
@@ -174,8 +174,8 @@ public class DrivingSingleOp extends LinearOpMode {
                         topButton.resetToggles();
                         leftButton.resetToggles();
                         rightButton.resetToggles();
-                        robot.armRight.setPosition(ARM_RIGHT_MAX);
-                        robot.armLeft.setPosition(ARM_LEFT_MAX);
+                        robot.armRight.setPosition(ARM_RIGHT_MIN);
+                        robot.armLeft.setPosition(ARM_LEFT_MIN);
 
                         Thread.sleep(800);
                         robot.intakeWheelsRight.runContinuous(false, true);

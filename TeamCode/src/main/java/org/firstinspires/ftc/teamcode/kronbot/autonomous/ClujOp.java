@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.kronbot.autonomous;
 
 
-import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_RIGHT_INT;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.autonomous.AutonomousConstants.Pose1;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.autonomous.AutonomousConstants.coordinatesConvert;
 
@@ -13,7 +12,6 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.kronbot.utils.Constants;
-import org.firstinspires.ftc.teamcode.kronbot.utils.autonomous.TrajectoryFactory;
 import org.firstinspires.ftc.teamcode.roadrunner.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.roadrunner.trajectorysequence.TrajectorySequence;
 
@@ -27,7 +25,7 @@ public class ClujOp extends LinearOpMode {
 
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
-        hardwareMap.servo.get("armRightServo").setPosition(Constants.ARM_RIGHT_MAX);
+        hardwareMap.servo.get("armRightServo").setPosition(Constants.ARM_RIGHT_MIN);
         hardwareMap.servo.get("clawServo").setPosition(Constants.CLAW_CLOSE);
 
         Pose2d startPose = new Pose2d(0, 0, 0);
@@ -53,7 +51,7 @@ public class ClujOp extends LinearOpMode {
             hardwareMap.servo.get("armRightServo").setPosition(Constants.ARM_RIGHT_INT);
 
             sleep(500);
-            hardwareMap.servo.get("armRightServo").setPosition(Constants.ARM_RIGHT_MIN);
+            hardwareMap.servo.get("armRightServo").setPosition(Constants.ARM_RIGHT_MAX);
             sleep(500);
             hardwareMap.servo.get("clawServo").setPosition(Constants.CLAW_OPEN);
 
