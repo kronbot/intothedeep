@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.kronbot.utils.drivers;
 
+import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.LIFT_INIT_POSITION;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.LIFT_MAX_POSITION;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.LIFT_REVERSE_POWER;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.LIFT_TOLERANCE;
@@ -41,7 +42,7 @@ public class LiftDriver {
         if (liftMotor.getCurrentPosition() >= LIFT_MAX_POSITION && power > 0) {
             liftMotor.setPower(LIFT_REST_POWER);
             return;
-        } else if (liftMotor.getCurrentPosition() <= 0 && power < 0) {
+        } else if (liftMotor.getCurrentPosition() <= LIFT_INIT_POSITION && power < 0) {
             liftMotor.setPower(LIFT_REST_POWER);
             return;
         }

@@ -104,9 +104,9 @@ public class DrivingDualOp extends LinearOpMode {
                 telemetry.addData("Right", robot.liftRight.getCurrentPosition());
 
                 // Intake Wheels
-                if (utilityGamepad.dpad_down) {
-                    robot.intakeWheelsRight.runContinuous(false, utilityGamepad.dpad_down);
-                    robot.intakeWheelsLeft.runContinuous(utilityGamepad.dpad_down, false);
+                if (utilityGamepad.square) {
+                    robot.intakeWheelsRight.runContinuous(false, utilityGamepad.square);
+                    robot.intakeWheelsLeft.runContinuous(utilityGamepad.square, false);
                 } else if (extended) {
                     robot.intakeWheelsRight.runContinuous(true, false);
                     robot.intakeWheelsLeft.runContinuous(false, true);
@@ -148,7 +148,7 @@ public class DrivingDualOp extends LinearOpMode {
             }
 
             // Retraction
-            retractButton.updateButton(utilityGamepad.square);
+            retractButton.updateButton(utilityGamepad.cross);
             retractButton.shortPress();
             if (retractButton.getShortToggle() && !waitingRetraction.get() && extended) {
                 extended = false;

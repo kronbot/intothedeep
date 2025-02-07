@@ -25,7 +25,7 @@ public class Constants {
     public static double LIFT_REST_POWER = 0.0005;
     public static double LIFT_REVERSE_POWER = 0.9;
     public static double LIFT_TOLERANCE = 50;
-    public static int   LIFT_INIT_POSITION = 50 ;
+    public static int   LIFT_INIT_POSITION = 0;
     public static int LIFT_MAX_POSITION = 2500;
     //?
     public static int LIFT_TARGET_POSITION=500;
