@@ -48,7 +48,7 @@ public class ClujOp extends LinearOpMode {
 
             drive.followTrajectorySequence(trajectoryToPose1);
             sleep(500);
-            hardwareMap.servo.get("armRightServo").setPosition(Constants.ARM_RIGHT_INT);
+            hardwareMap.servo.get("armRightServo").setPosition(Constants.ARM_RIGHT_MAX);
 
             sleep(500);
             hardwareMap.servo.get("armRightServo").setPosition(Constants.ARM_RIGHT_MAX);
