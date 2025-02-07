@@ -10,6 +10,7 @@ import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.kronbot.utils.Constants;
 import org.firstinspires.ftc.teamcode.roadrunner.drive.SampleMecanumDrive;
@@ -24,6 +25,16 @@ public class ClujOp extends LinearOpMode {
         telemetry = new MultipleTelemetry(telemetry, dashboard.getTelemetry());
 
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
+
+        // Initialize motors
+        DcMotor liftLeft = hardwareMap.get(DcMotor.class, "liftMotorLeft");
+        DcMotor liftRight = hardwareMap.get(DcMotor.class, "liftMotorRight");
+//
+//        liftLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//        liftRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//
+//        liftLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//        liftRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         hardwareMap.servo.get("armRightServo").setPosition(Constants.ARM_RIGHT_MIN);
         hardwareMap.servo.get("clawServo").setPosition(Constants.CLAW_CLOSE);
@@ -46,12 +57,28 @@ public class ClujOp extends LinearOpMode {
         if (opModeIsActive()) {
             telemetry.update();
 
-            drive.followTrajectorySequence(trajectoryToPose1);
+            //drive.followTrajectorySequence(trajectoryToPose1);
             sleep(500);
-            hardwareMap.servo.get("armRightServo").setPosition(Constants.ARM_RIGHT_MAX);
+            liftLeft.setTargetPosition(Constants.LIFT_TARGET_POSITION);
+            liftRight.setTargetPosition(Constants.LIFT_TARGET_POSITION);
+
+            liftLeft.setPower(1.0);
+            liftRight.setPower(1.0);
+            // Wait until lift reaches position
+            while (liftLeft.isBusy() && liftRight.isBusy() && opModeIsActive()) {
+                telemetry.addData("Lift Left Pos", liftLeft.getCurrentPosition());
+                telemetry.addData("Lift Right Pos", liftRight.getCurrentPosition());
+                telemetry.update();
+            }
+
+            // Stop the lift motors
+            liftLeft.setPower(0);
+            liftRight.setPower(0);
 
             sleep(500);
             hardwareMap.servo.get("armRightServo").setPosition(Constants.ARM_RIGHT_MAX);
+
+
             sleep(500);
             hardwareMap.servo.get("clawServo").setPosition(Constants.CLAW_OPEN);
 

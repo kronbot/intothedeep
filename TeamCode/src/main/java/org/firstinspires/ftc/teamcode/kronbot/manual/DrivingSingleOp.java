@@ -83,8 +83,22 @@ public class DrivingSingleOp extends LinearOpMode {
         while (opModeIsActive() && !isStopRequested()) {
             if (!waitingRetraction.get()) {
                 // Lift
-                robot.liftLeft.run(gamepad.right_trigger - gamepad.left_trigger);
-                robot.liftRight.run(gamepad.right_trigger - gamepad.left_trigger);
+//                robot.liftLeft.run(gamepad.right_trigger - gamepad.left_trigger);
+//                robot.liftRight.run(gamepad.right_trigger - gamepad.left_trigger);
+                double liftPower = gamepad.right_trigger - gamepad.left_trigger;
+                int leftPosition = robot.liftLeft.getCurrentPosition();
+                int rightPosition = robot.liftRight.getCurrentPosition();
+
+                // Prevent going below the initial position
+                if (leftPosition <= Constants.LIFT_INIT_POSITION && liftPower < 0) {
+                    liftPower = 0;
+                }
+                if (rightPosition <= Constants.LIFT_INIT_POSITION && liftPower < 0) {
+                    liftPower = 0;
+                }
+
+                robot.liftLeft.run(liftPower);
+                robot.liftRight.run(liftPower);
                 telemetry.addData("Left", robot.liftLeft.getCurrentPosition());
                 telemetry.addData("Right", robot.liftRight.getCurrentPosition());
 
@@ -160,10 +174,11 @@ public class DrivingSingleOp extends LinearOpMode {
                     clawButton.resetToggles();
                     robot.claw.setPosition(CLAW_OPEN);
 
+
                     try {
                         Thread.sleep(900);
-                        robot.claw.setPosition(CLAW_CLOSE);
-                        clawButton.simulateShortPress();
+//                        robot.claw.setPosition(CLAW_CLOSE);
+//                        clawButton.simulateShortPress();
 
                         robot.intakeWheelsRight.runContinuous(false, false);
                         robot.intakeWheelsLeft.runContinuous(false, false);

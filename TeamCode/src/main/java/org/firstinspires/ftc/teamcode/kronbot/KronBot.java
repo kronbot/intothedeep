@@ -56,7 +56,7 @@ public class KronBot {
         liftLeft = new LiftDriver();
         liftRight = new LiftDriver();
         liftLeft.init(new Motor(hardwareMap), true, "liftMotorLeft", false);
-        liftRight.init(new Motor(hardwareMap), true, "liftMotorRight", true );
+        liftRight.init(new Motor(hardwareMap), true, "liftMotorRight", true);
     }
 
     public void initServo(HardwareMap hardwareMap) {
@@ -64,7 +64,7 @@ public class KronBot {
 
         armLeft = hardwareMap.get(com.qualcomm.robotcore.hardware.Servo.class, "armLeftServo");
         armRight = hardwareMap.get(com.qualcomm.robotcore.hardware.Servo.class, "armRightServo");
-        armLeft.setDirection(com.qualcomm.robotcore.hardware.Servo.Direction.REVERSE);
+        //armLeft.setDirection(com.qualcomm.robotcore.hardware.Servo.Direction.REVERSE);
         armLeft.setPosition(ARM_LEFT_INIT);
         armRight.setPosition(ARM_RIGHT_INIT);
 

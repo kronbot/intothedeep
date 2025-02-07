@@ -27,6 +27,8 @@ public class Constants {
     public static double LIFT_TOLERANCE = 50;
     public static int   LIFT_INIT_POSITION = 50 ;
     public static int LIFT_MAX_POSITION = 2500;
+    //?
+    public static int LIFT_TARGET_POSITION=500;
 
     public static double CAMERA_TRASH_HOLD = 0.2;
     public static int BLUE_HUE_LOW = 0;
@@ -43,13 +45,13 @@ public class Constants {
     public static double CLAW_OPEN = 0.35;
 
     public static double INTAKE_LEFT_MIN = 0.15;
-    public static double INTAKE_LEFT_MAX = 0.27;
+    public static double INTAKE_LEFT_MAX = 0.235;
     public static double INTAKE_RIGHT_MIN = 0.15;
-    public static double INTAKE_RIGHT_MAX = 0.27;
+    public static double INTAKE_RIGHT_MAX = 0.235;
 
-    public static double SLIDE_LEFT_INIT = 0.6;
-    public static double SLIDE_LEFT_CLOSED = 0.6;
-    public static double SLIDE_LEFT_OPENED = 1;
+    public static double SLIDE_LEFT_INIT = 0.15;
+    public static double SLIDE_LEFT_CLOSED = 0.15;
+    public static double SLIDE_LEFT_OPENED = 0.5;
     public static double SLIDE_RIGHT_INIT = 0.10;
     public static double SLIDE_RIGHT_CLOSED = 0.10;
     public static double SLIDE_RIGHT_OPENED = 0.35;

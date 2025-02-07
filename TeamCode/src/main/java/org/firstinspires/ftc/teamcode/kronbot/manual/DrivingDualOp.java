@@ -84,8 +84,22 @@ public class DrivingDualOp extends LinearOpMode {
         while (opModeIsActive() && !isStopRequested()) {
             if (!waitingRetraction.get()) {
                 // Lift
-                robot.liftLeft.run(utilityGamepad.right_trigger - utilityGamepad.left_trigger);
-                robot.liftRight.run(utilityGamepad.right_trigger - utilityGamepad.left_trigger);
+//                robot.liftLeft.run(utilityGamepad.right_trigger - utilityGamepad.left_trigger);
+//                robot.liftRight.run(utilityGamepad.right_trigger - utilityGamepad.left_trigger);
+                double liftPower = utilityGamepad.right_trigger - utilityGamepad.left_trigger;
+                int leftPosition = robot.liftLeft.getCurrentPosition();
+                int rightPosition = robot.liftRight.getCurrentPosition();
+
+                // Prevent going below the initial position
+                if (leftPosition <= Constants.LIFT_INIT_POSITION && liftPower < 0) {
+                    liftPower = 0;
+                }
+                if (rightPosition <= Constants.LIFT_INIT_POSITION && liftPower < 0) {
+                    liftPower = 0;
+                }
+
+                robot.liftLeft.run(liftPower);
+                robot.liftRight.run(liftPower);
                 telemetry.addData("Left", robot.liftLeft.getCurrentPosition());
                 telemetry.addData("Right", robot.liftRight.getCurrentPosition());
 
