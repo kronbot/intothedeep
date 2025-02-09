@@ -25,18 +25,9 @@ public class ClujOp extends LinearOpMode {
 
         SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
-        // Initialize motors
-        DcMotor liftLeft = hardwareMap.get(DcMotor.class, "liftMotorLeft");
-        DcMotor liftRight = hardwareMap.get(DcMotor.class, "liftMotorRight");
-//
-//        liftLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//        liftRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-//
-//        liftLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-//        liftRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
         hardwareMap.servo.get("armRightServo").setPosition(Constants.ARM_RIGHT_MIN);
         hardwareMap.servo.get("clawServo").setPosition(Constants.CLAW_CLOSE);
+
 
         Pose2d startPose = new Pose2d(0, 0, 0);
         Pose2d pose1=coordinatesConvert(Pose1);
@@ -56,24 +47,7 @@ public class ClujOp extends LinearOpMode {
         if (opModeIsActive()) {
             telemetry.update();
 
-            //drive.followTrajectorySequence(trajectoryToPose1);
-            sleep(500);
-            liftLeft.setTargetPosition(Constants.LIFT_TARGET_POSITION);
-            liftRight.setTargetPosition(Constants.LIFT_TARGET_POSITION);
-
-            liftLeft.setPower(1.0);
-            liftRight.setPower(1.0);
-            // Wait until lift reaches position
-            while (liftLeft.isBusy() && liftRight.isBusy() && opModeIsActive()) {
-                telemetry.addData("Lift Left Pos", liftLeft.getCurrentPosition());
-                telemetry.addData("Lift Right Pos", liftRight.getCurrentPosition());
-                telemetry.update();
-            }
-
-            // Stop the lift motors
-            liftLeft.setPower(0);
-            liftRight.setPower(0);
-
+            drive.followTrajectorySequence(trajectoryToPose1);
             sleep(500);
             hardwareMap.servo.get("armRightServo").setPosition(Constants.ARM_RIGHT_MAX);
 

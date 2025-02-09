@@ -26,7 +26,7 @@ public class AutonomousConstants {
     public static Coordinates FirstPose = new Coordinates(2, -1, 0);
     public static Coordinates SecondPose = new Coordinates(1.5, 0, 0);
     public static Coordinates ThirdPose = new Coordinates(-2, -20, 0);
-    public static Coordinates Pose1 = new Coordinates(5, -15, 0);
+    public static Coordinates Pose1 = new Coordinates(0, 30, 0);
     public static Coordinates Pose2 = new Coordinates(2, 0, 0);
     public static Coordinates Pose3 = new Coordinates(-2, 0, 0);
 //    public static Coordinates Pose4 = new Coordinates(-12, 0, 0);
