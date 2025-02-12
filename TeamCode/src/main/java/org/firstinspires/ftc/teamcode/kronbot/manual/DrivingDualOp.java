@@ -6,7 +6,9 @@ import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_RIGHT_M
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_RIGHT_MAX;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.CLAW_CLOSE;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.CLAW_OPEN;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.INTAKE_CLOSE;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.INTAKE_LEFT_MAX;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.INTAKE_OPEN;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.INTAKE_RIGHT_MAX;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.INTAKE_LEFT_MIN;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.INTAKE_RIGHT_MIN;
@@ -61,6 +63,9 @@ public class DrivingDualOp extends LinearOpMode {
         // Claw
         Button clawButton = new Button();
 
+        //Intake
+        Button intakeButton = new Button();
+
         // Arm
         Button armButton = new Button();
 
@@ -84,43 +89,38 @@ public class DrivingDualOp extends LinearOpMode {
 
         while (opModeIsActive() && !isStopRequested()) {
             if (!waitingRetraction.get()) {
+
                 // Lift
-//                robot.liftLeft.run(utilityGamepad.right_trigger - utilityGamepad.left_trigger);
-//                robot.liftRight.run(utilityGamepad.right_trigger - utilityGamepad.left_trigger);
-                double liftPower = utilityGamepad.right_trigger - utilityGamepad.left_trigger;
-                int leftPosition = robot.liftLeft.getCurrentPosition();
-                int rightPosition = robot.liftRight.getCurrentPosition();
-
-                // Prevent going below the initial position
-                if (leftPosition <= Constants.LIFT_INIT_POSITION && liftPower < 0) {
-                    liftPower = 0;
-                }
-                if (rightPosition <= Constants.LIFT_INIT_POSITION && liftPower < 0) {
-                    liftPower = 0;
-                }
-
-                robot.liftLeft.run(liftPower);
-                robot.liftRight.run(liftPower);
-                telemetry.addData("Left", robot.liftLeft.getCurrentPosition());
-                telemetry.addData("Right", robot.liftRight.getCurrentPosition());
-
-                // Intake Wheels
-                if (utilityGamepad.square) {
-                    robot.intakeWheelsRight.runContinuous(false, utilityGamepad.square);
-                    robot.intakeWheelsLeft.runContinuous(utilityGamepad.square, false);
-                } else if (extended) {
-                    robot.intakeWheelsRight.runContinuous(true, false);
-                    robot.intakeWheelsLeft.runContinuous(false, true);
+                robot.liftLeft.run(utilityGamepad.right_trigger - utilityGamepad.left_trigger);
+                robot.liftRight.run(utilityGamepad.right_trigger - utilityGamepad.left_trigger);
+                //when the lift reaches a certain position, the arm lifts ???
+                if (robot.liftLeft.getCurrentPosition() > 1500) {
+                    robot.armRight.setPosition(ARM_RIGHT_MAX);
+                    robot.armLeft.setPosition(ARM_LEFT_MAX);
                 } else {
-                    robot.intakeWheelsRight.runContinuous(false, false);
-                    robot.intakeWheelsLeft.runContinuous(false, false);
+                    robot.armRight.setPosition(ARM_RIGHT_MIN);
+                    robot.armLeft.setPosition(ARM_LEFT_MIN);
                 }
+
+                //Intake
+                intakeButton.updateButton(utilityGamepad.square);
+                intakeButton.shortPress();
+                if (intakeButton.getShortToggle())
+                    robot.intakeClawServo.setPosition(INTAKE_CLOSE);
+                else robot.intakeClawServo.setPosition(INTAKE_OPEN);
 
                 // Claw
                 clawButton.updateButton(utilityGamepad.dpad_right);
                 clawButton.shortPress();
-                if (clawButton.getShortToggle())
+                //when the robot is retracted and the claw closes, the intake opens ???
+                if (clawButton.getShortToggle() && !extended) {
                     robot.claw.setPosition(CLAW_CLOSE);
+                    sleep(100);
+                    robot.intakeClawServo.setPosition(INTAKE_OPEN);
+                } //if it's not retracted it works normally
+                else if (clawButton.getShortToggle() && extended) {
+                    robot.claw.setPosition(CLAW_CLOSE);
+                }
                 else robot.claw.setPosition(CLAW_OPEN);
 
                 // Arm
@@ -145,6 +145,7 @@ public class DrivingDualOp extends LinearOpMode {
 
                     robot.intakeServoRight.setPosition(INTAKE_RIGHT_MAX);
                     robot.intakeServoLeft.setPosition(INTAKE_LEFT_MAX);
+
                 }
             }
 
@@ -159,9 +160,6 @@ public class DrivingDualOp extends LinearOpMode {
 
                     retractButton.resetToggles();
                     extensionButton.resetToggles();
-
-                    robot.intakeWheelsRight.runContinuous(true, false);
-                    robot.intakeWheelsLeft.runContinuous(false, true);
 
                     armButton.resetToggles();
                     robot.armRight.setPosition(ARM_RIGHT_MIN);
@@ -178,11 +176,9 @@ public class DrivingDualOp extends LinearOpMode {
 
                     try {
                         Thread.sleep(900);
-                        robot.claw.setPosition(CLAW_CLOSE);
-                        clawButton.simulateShortPress();
+//                        robot.claw.setPosition(CLAW_CLOSE);
+//                        clawButton.simulateShortPress();
 
-                        robot.intakeWheelsRight.runContinuous(false, false);
-                        robot.intakeWheelsLeft.runContinuous(false, false);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }

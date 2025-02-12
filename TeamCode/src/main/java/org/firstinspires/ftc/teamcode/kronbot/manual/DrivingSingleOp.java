@@ -103,16 +103,16 @@ public class DrivingSingleOp extends LinearOpMode {
                 telemetry.addData("Right", robot.liftRight.getCurrentPosition());
 
                 // Intake Wheels
-                if (gamepad.dpad_down) {
-                    robot.intakeWheelsRight.runContinuous(false, gamepad.dpad_down);
-                    robot.intakeWheelsLeft.runContinuous(gamepad.dpad_down, false);
-                } else if (extended) {
-                    robot.intakeWheelsRight.runContinuous(true, false);
-                    robot.intakeWheelsLeft.runContinuous(false, true);
-                } else {
-                    robot.intakeWheelsRight.runContinuous(false, false);
-                    robot.intakeWheelsLeft.runContinuous(false, false);
-                }
+//                if (gamepad.dpad_down) {
+//                    robot.intakeWheelsRight.runContinuous(false, gamepad.dpad_down);
+//                    robot.intakeWheelsLeft.runContinuous(gamepad.dpad_down, false);
+//                } else if (extended) {
+//                    robot.intakeWheelsRight.runContinuous(true, false);
+//                    robot.intakeWheelsLeft.runContinuous(false, true);
+//                } else {
+//                    robot.intakeWheelsRight.runContinuous(false, false);
+//                    robot.intakeWheelsLeft.runContinuous(false, false);
+//                }
 
                 // Claw
                 clawButton.updateButton(gamepad.dpad_right);
@@ -157,9 +157,9 @@ public class DrivingSingleOp extends LinearOpMode {
 
                     retractButton.resetToggles();
                     extensionButton.resetToggles();
-
-                    robot.intakeWheelsRight.runContinuous(true, false);
-                    robot.intakeWheelsLeft.runContinuous(false, true);
+//
+//                    robot.intakeWheelsRight.runContinuous(true, false);
+//                    robot.intakeWheelsLeft.runContinuous(false, true);
 
                     armButton.resetToggles();
                     robot.armRight.setPosition(ARM_RIGHT_MIN);
@@ -179,9 +179,9 @@ public class DrivingSingleOp extends LinearOpMode {
                         Thread.sleep(900);
 //                        robot.claw.setPosition(CLAW_CLOSE);
 //                        clawButton.simulateShortPress();
-
-                        robot.intakeWheelsRight.runContinuous(false, false);
-                        robot.intakeWheelsLeft.runContinuous(false, false);
+//
+//                        robot.intakeWheelsRight.runContinuous(false, false);
+//                        robot.intakeWheelsLeft.runContinuous(false, false);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }

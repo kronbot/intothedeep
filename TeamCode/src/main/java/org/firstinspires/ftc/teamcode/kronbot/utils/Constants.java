@@ -41,17 +41,21 @@ public class Constants {
     public static double ARM_RIGHT_MIN = 0.66;
     public static double ARM_RIGHT_MAX = 0.15;
 
-    public static double CLAW_CLOSE = 0.20;
-    public static double CLAW_OPEN = 0.35;
+    public static double CLAW_CLOSE = 0.4;
+    public static double CLAW_OPEN = 0.25;
+
+    public static double INTAKE_CLOSE =1;
+    public static double INTAKE_OPEN = 0.4;
 
     public static double INTAKE_LEFT_MIN = 0.15;
     public static double INTAKE_LEFT_MAX = 0.22;
     public static double INTAKE_RIGHT_MIN = 0.15;
     public static double INTAKE_RIGHT_MAX = 0.22;
 
-    public static double SLIDE_LEFT_INIT = 0.15;
-    public static double SLIDE_LEFT_CLOSED = 0.15;
-    public static double SLIDE_LEFT_OPENED = 0.5;
+
+    public static double SLIDE_LEFT_INIT = 0.2;
+    public static double SLIDE_LEFT_CLOSED = 0.2;
+    public static double SLIDE_LEFT_OPENED = 0.8;
     public static double SLIDE_RIGHT_INIT = 0.10;
     public static double SLIDE_RIGHT_CLOSED = 0.10;
     public static double SLIDE_RIGHT_OPENED = 0.35;

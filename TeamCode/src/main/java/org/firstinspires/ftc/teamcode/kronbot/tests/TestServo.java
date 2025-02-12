@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.kronbot.utils.Constants;
 public class TestServo extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
-        Servo servo1 = hardwareMap.get(Servo.class, "claw");
+        Servo servo1 = hardwareMap.get(Servo.class, "intakeSlideLeft");
 //        Servo servo2 = hardwareMap.get(Servo.class, "servo2");
 //        Servo servo3 = hardwareMap.get(Servo.class, "servo3");
 //        Servo servo4 = hardwareMap.get(Servo.class, "servo4");
