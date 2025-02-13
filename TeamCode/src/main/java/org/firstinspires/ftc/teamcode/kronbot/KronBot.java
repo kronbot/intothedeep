@@ -28,8 +28,6 @@ public class KronBot {
     public com.qualcomm.robotcore.hardware.Servo armRight;
     public com.qualcomm.robotcore.hardware.Servo claw;
 
-//    public Servo intakeWheelsRight;
-//    public Servo intakeWheelsLeft;
     public com.qualcomm.robotcore.hardware.Servo intakeServoLeft;
     public com.qualcomm.robotcore.hardware.Servo intakeServoRight;
     public com.qualcomm.robotcore.hardware.Servo intakeSlideServoLeft;
@@ -74,6 +72,7 @@ public class KronBot {
 
         intakeServoLeft = hardwareMap.get(com.qualcomm.robotcore.hardware.Servo.class, "intakeLeft");
         intakeServoLeft.setPosition(INTAKE_LEFT_MIN);
+        intakeServoLeft.setDirection(com.qualcomm.robotcore.hardware.Servo.Direction.REVERSE);
         intakeServoRight = hardwareMap.get(com.qualcomm.robotcore.hardware.Servo.class, "intakeRight");
         intakeServoRight.setPosition(INTAKE_RIGHT_MIN);
 

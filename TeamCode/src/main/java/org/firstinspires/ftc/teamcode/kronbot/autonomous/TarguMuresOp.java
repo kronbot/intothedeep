@@ -54,8 +54,8 @@ public class TarguMuresOp extends LinearOpMode {
 
             sleep(500);
 
-            robot.liftLeft.setTargetPosition(Constants.LIFT_TARGET_POSITION);
-            robot.liftRight.setTargetPosition(Constants.LIFT_TARGET_POSITION);
+//            robot.liftLeft.setTargetPosition(Constants.LIFT_TARGET_POSITION);
+//            robot.liftRight.setTargetPosition(Constants.LIFT_TARGET_POSITION);
 
             robot.liftLeft.setPower(1.0);
             robot.liftRight.setPower(1.0);

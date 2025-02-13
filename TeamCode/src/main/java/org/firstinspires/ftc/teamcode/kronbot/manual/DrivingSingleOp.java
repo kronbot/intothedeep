@@ -6,10 +6,15 @@ import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_RIGHT_M
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_RIGHT_MAX;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.CLAW_CLOSE;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.CLAW_OPEN;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.INTAKE_CLAW_CLOSE;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.INTAKE_CLAW_OPEN;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.INTAKE_CLAW_SEMI_OPEN;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.INTAKE_LEFT_MAX;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.INTAKE_LEFT_MIN;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.INTAKE_LEFT_UP;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.INTAKE_RIGHT_MAX;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.INTAKE_RIGHT_MIN;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.INTAKE_RIGHT_UP;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.SLIDE_LEFT_CLOSED;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.SLIDE_LEFT_OPENED;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.SLIDE_RIGHT_CLOSED;
@@ -83,36 +88,8 @@ public class DrivingSingleOp extends LinearOpMode {
         while (opModeIsActive() && !isStopRequested()) {
             if (!waitingRetraction.get()) {
                 // Lift
-//                robot.liftLeft.run(gamepad.right_trigger - gamepad.left_trigger);
-//                robot.liftRight.run(gamepad.right_trigger - gamepad.left_trigger);
-                double liftPower = gamepad.right_trigger - gamepad.left_trigger;
-                int leftPosition = robot.liftLeft.getCurrentPosition();
-                int rightPosition = robot.liftRight.getCurrentPosition();
-
-                // Prevent going below the initial position
-                if (leftPosition <= Constants.LIFT_INIT_POSITION && liftPower < 0) {
-                    liftPower = 0;
-                }
-                if (rightPosition <= Constants.LIFT_INIT_POSITION && liftPower < 0) {
-                    liftPower = 0;
-                }
-
-                robot.liftLeft.run(liftPower);
-                robot.liftRight.run(liftPower);
-                telemetry.addData("Left", robot.liftLeft.getCurrentPosition());
-                telemetry.addData("Right", robot.liftRight.getCurrentPosition());
-
-                // Intake Wheels
-//                if (gamepad.dpad_down) {
-//                    robot.intakeWheelsRight.runContinuous(false, gamepad.dpad_down);
-//                    robot.intakeWheelsLeft.runContinuous(gamepad.dpad_down, false);
-//                } else if (extended) {
-//                    robot.intakeWheelsRight.runContinuous(true, false);
-//                    robot.intakeWheelsLeft.runContinuous(false, true);
-//                } else {
-//                    robot.intakeWheelsRight.runContinuous(false, false);
-//                    robot.intakeWheelsLeft.runContinuous(false, false);
-//                }
+                robot.liftLeft.run(gamepad.right_trigger - gamepad.left_trigger);
+                robot.liftRight.run(gamepad.right_trigger - gamepad.left_trigger);
 
                 // Claw
                 clawButton.updateButton(gamepad.dpad_right);
@@ -138,6 +115,9 @@ public class DrivingSingleOp extends LinearOpMode {
                 if (extensionButton.getShortToggle() && !extended) {
                     extended = true;
 
+                    robot.intakeServoRight.setPosition(INTAKE_RIGHT_UP);
+                    robot.intakeServoLeft.setPosition(INTAKE_LEFT_UP);
+
                     robot.intakeSlideServoRight.setPosition(SLIDE_RIGHT_OPENED);
                     robot.intakeSlideServoLeft.setPosition(SLIDE_LEFT_OPENED);
 
@@ -157,31 +137,38 @@ public class DrivingSingleOp extends LinearOpMode {
 
                     retractButton.resetToggles();
                     extensionButton.resetToggles();
-//
-//                    robot.intakeWheelsRight.runContinuous(true, false);
-//                    robot.intakeWheelsLeft.runContinuous(false, true);
 
                     armButton.resetToggles();
                     robot.armRight.setPosition(ARM_RIGHT_MIN);
                     robot.armLeft.setPosition(ARM_LEFT_MIN);
 
-                    robot.intakeServoRight.setPosition(INTAKE_RIGHT_MIN);
-                    robot.intakeServoLeft.setPosition(INTAKE_LEFT_MIN);
+                    robot.intakeServoRight.setPosition(INTAKE_RIGHT_UP);
+                    robot.intakeServoLeft.setPosition(INTAKE_LEFT_UP);
 
                     robot.intakeSlideServoRight.setPosition(SLIDE_RIGHT_CLOSED);
                     robot.intakeSlideServoLeft.setPosition(SLIDE_LEFT_CLOSED);
 
+                    robot.intakeClawServo.setPosition(INTAKE_CLAW_SEMI_OPEN);
+
                     clawButton.resetToggles();
                     robot.claw.setPosition(CLAW_OPEN);
 
-
                     try {
-                        Thread.sleep(900);
-//                        robot.claw.setPosition(CLAW_CLOSE);
-//                        clawButton.simulateShortPress();
-//
-//                        robot.intakeWheelsRight.runContinuous(false, false);
-//                        robot.intakeWheelsLeft.runContinuous(false, false);
+                        Thread.sleep(100);
+
+                        robot.intakeClawServo.setPosition(INTAKE_CLAW_CLOSE);
+
+                        robot.intakeServoRight.setPosition(INTAKE_RIGHT_MIN);
+                        robot.intakeServoLeft.setPosition(INTAKE_LEFT_MIN);
+
+                        Thread.sleep(300);
+
+                        robot.claw.setPosition(CLAW_CLOSE);
+
+                        Thread.sleep(200);
+
+                        robot.intakeClawServo.setPosition(INTAKE_CLAW_OPEN);
+
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
