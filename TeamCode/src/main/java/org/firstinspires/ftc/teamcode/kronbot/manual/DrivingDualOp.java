@@ -132,7 +132,7 @@ public class DrivingDualOp extends LinearOpMode {
                 if (!waitingRetraction.get()) {
                     clawButton.updateButton(utilityGamepad.dpad_right);
                     clawButton.shortPress();
-                    if (!waitingRetraction.get()){// && !extended) {
+                    if (!extended && !waitingRetraction.get()) {
                         if (clawButton.getShortToggle())
                             robot.claw.setPosition(CLAW_OPEN);
                         else robot.claw.setPosition(CLAW_CLOSE);
@@ -184,6 +184,9 @@ public class DrivingDualOp extends LinearOpMode {
                     robot.intakeClawServo.setPosition(INTAKE_CLAW_SEMI_OPEN);
 
                     try {
+                        telemetry.addData("Retraction", "Claw opening...");
+                        telemetry.update();
+                        robot.claw.setPosition(CLAW_OPEN);
                         Thread.sleep(500);
 
                         robot.intakeClawServo.setPosition(INTAKE_CLAW_CLOSE);

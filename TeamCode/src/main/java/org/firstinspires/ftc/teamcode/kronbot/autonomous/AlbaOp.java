@@ -85,27 +85,30 @@ public class AlbaOp extends LinearOpMode {
             hardwareMap.servo.get("armLeftServo").setPosition(ARM_LEFT_MAX);
             hardwareMap.servo.get("armRightServo").setPosition(ARM_RIGHT_MAX);
 
-            sleep(500);
+            TrajectorySequence trajectoryToPose2 = drive.trajectorySequenceBuilder(pose1)
+                    .lineTo(new Vector2d(pose2.getX(), pose2.getY()))  // Move to Pose 2
+                    .turn(Math.toRadians(45))  // Rotate 45 degrees
+                    .build();
+
+            drive.followTrajectorySequence(trajectoryToPose2);
+
+
+            sleep(1500);
             hardwareMap.servo.get("clawServo").setPosition(CLAW_OPEN);
 
-            sleep(500);
+            sleep(1500);
 
             //retract lift and arm
             hardwareMap.servo.get("clawServo").setPosition(CLAW_CLOSE);
             hardwareMap.servo.get("armLeftServo").setPosition(ARM_LEFT_MIN);
             hardwareMap.servo.get("armRightServo").setPosition(ARM_RIGHT_MIN);
             sleep(100);
+            robot.liftLeft.setPower(1.0);
+            robot.liftRight.setPower(1.0);
             robot.liftLeft.setTargetPosition(0);
             robot.liftRight.setTargetPosition(0);
 
-            //go to new sample
-            TrajectorySequence trajectoryToPose2 = drive.trajectorySequenceBuilder(pose1)
-                    .lineTo(new Vector2d(pose2.getX(), pose2.getY()))
-                    .build();
-            drive.followTrajectorySequence(trajectoryToPose2);
         }
-
-
 
         while (!isStopRequested() && opModeIsActive()) {
             telemetry.update();

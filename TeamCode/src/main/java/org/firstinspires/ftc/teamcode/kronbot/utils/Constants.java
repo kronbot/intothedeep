@@ -42,7 +42,7 @@ public class Constants {
     public static double ARM_RIGHT_MAX = 0.15;
 
     public static double CLAW_CLOSE = 0.23;
-    public static double CLAW_OPEN = 0.4;
+    public static double CLAW_OPEN = 0.37;
 
     public static double INTAKE_CLAW_CLOSE = 1;
     public static double INTAKE_CLAW_OPEN = 0.65;
@@ -60,8 +60,8 @@ public class Constants {
     public static double SLIDE_LEFT_CLOSED = 0.6;
     public static double SLIDE_LEFT_OPENED = 0.05;
     public static double SLIDE_LEFT_SEMI_CLOSED = 0.2; //0.4
-    public static double SLIDE_RIGHT_INIT = 0.3;
-    public static double SLIDE_RIGHT_CLOSED = 0.3;
+    public static double SLIDE_RIGHT_INIT = 0.4;
+    public static double SLIDE_RIGHT_CLOSED = 0.4;
     public static double SLIDE_RIGHT_OPENED = 0.05;
     public static double SLIDE_RIGHT_SEMI_CLOSED =0.25; //0.28
     public static LogoFacingDirection LOGO_FACING_DIRECTION = LogoFacingDirection.LEFT;
