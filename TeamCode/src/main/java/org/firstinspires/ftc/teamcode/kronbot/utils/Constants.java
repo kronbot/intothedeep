@@ -42,11 +42,11 @@ public class Constants {
     public static double ARM_RIGHT_MAX = 0.15;
 
     public static double CLAW_CLOSE = 0.23;
-    public static double CLAW_OPEN = 0.37;
+    public static double CLAW_OPEN = 0.4;
 
-    public static double INTAKE_CLAW_CLOSE = 1;
-    public static double INTAKE_CLAW_OPEN = 0.65;
-    public static double INTAKE_CLAW_SEMI_OPEN = 0.8;
+    public static double INTAKE_CLAW_CLOSE = 0.96;
+    public static double INTAKE_CLAW_OPEN = 0.9;
+    public static double INTAKE_CLAW_SEMI_OPEN = 0.945;
 
     public static double INTAKE_LEFT_MIN = 0.02;
     public static double INTAKE_LEFT_MAX = 0.05;
