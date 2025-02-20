@@ -56,10 +56,10 @@ public class Constants {
     public static double INTAKE_RIGHT_UP = 0.6;
 
 
-    public static double SLIDE_LEFT_INIT = 0.6;
-    public static double SLIDE_LEFT_CLOSED = 0.6;
-    public static double SLIDE_LEFT_OPENED = 0.05;
-    public static double SLIDE_LEFT_SEMI_CLOSED = 0.2; //0.4
+    public static double SLIDE_LEFT_INIT = 0.58;
+    public static double SLIDE_LEFT_CLOSED = 0.58;
+    public static double SLIDE_LEFT_OPENED = 0.24;
+    public static double SLIDE_LEFT_SEMI_CLOSED = 0.43; //0.4
     public static double SLIDE_RIGHT_INIT = 0.4;
     public static double SLIDE_RIGHT_CLOSED = 0.4;
     public static double SLIDE_RIGHT_OPENED = 0.05;

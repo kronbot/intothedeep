@@ -77,8 +77,6 @@ public class DrivingDualOp extends LinearOpMode {
         // Arm
         Button armButton = new Button();
 
-        //Lift and Arm
-        Button liftButton = new Button();
 
         // Actions
         Button retractButton = new Button();
