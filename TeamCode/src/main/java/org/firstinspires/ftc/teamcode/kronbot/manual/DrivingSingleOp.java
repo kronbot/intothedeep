@@ -148,7 +148,7 @@ public class DrivingSingleOp extends LinearOpMode {
                     robot.intakeSlideServoRight.setPosition(SLIDE_RIGHT_CLOSED);
                     robot.intakeSlideServoLeft.setPosition(SLIDE_LEFT_CLOSED);
 
-                    robot.intakeClawServo.setPosition(INTAKE_CLAW_SEMI_OPEN);
+                   // robot.intakeClawServo.setPosition(INTAKE_CLAW_SEMI_OPEN);
 
                     clawButton.resetToggles();
                     robot.claw.setPosition(CLAW_OPEN);
@@ -156,7 +156,7 @@ public class DrivingSingleOp extends LinearOpMode {
                     try {
                         Thread.sleep(100);
 
-                        robot.intakeClawServo.setPosition(INTAKE_CLAW_CLOSE);
+                       // robot.intakeClawServo.setPosition(INTAKE_CLAW_CLOSE);
 
                         robot.intakeServoRight.setPosition(INTAKE_RIGHT_MIN);
                         robot.intakeServoLeft.setPosition(INTAKE_LEFT_MIN);
@@ -167,7 +167,7 @@ public class DrivingSingleOp extends LinearOpMode {
 
                         Thread.sleep(200);
 
-                        robot.intakeClawServo.setPosition(INTAKE_CLAW_OPEN);
+                       // robot.intakeClawServo.setPosition(INTAKE_CLAW_OPEN);
 
                     } catch (InterruptedException e) {
                         e.printStackTrace();

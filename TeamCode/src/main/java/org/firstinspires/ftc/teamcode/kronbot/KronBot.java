@@ -32,7 +32,10 @@ public class KronBot {
     public com.qualcomm.robotcore.hardware.Servo intakeServoRight;
     public com.qualcomm.robotcore.hardware.Servo intakeSlideServoLeft;
     public com.qualcomm.robotcore.hardware.Servo intakeSlideServoRight;
-    public com.qualcomm.robotcore.hardware.Servo intakeClawServo;
+    public com.qualcomm.robotcore.hardware.Servo intakeLiftServo;
+    public com.qualcomm.robotcore.hardware.Servo intakeRotateServo;
+    public com.qualcomm.robotcore.hardware.CRServo testServo;
+
 
     public ControlHubGyroscope gyroscope;
 
@@ -60,10 +63,14 @@ public class KronBot {
     }
 
     public void initServo(HardwareMap hardwareMap) {
+
+        //testServo = hardwareMap.get(com.qualcomm.robotcore.hardware.CRServo.class, "test")
+
         claw = hardwareMap.get(com.qualcomm.robotcore.hardware.Servo.class, "clawServo");
 
-        intakeClawServo = hardwareMap.get(com.qualcomm.robotcore.hardware.Servo.class, "intakeServo");
-        intakeClawServo.setPosition(CLAW_OPEN);
+        intakeLiftServo = hardwareMap.get(com.qualcomm.robotcore.hardware.Servo.class, "intakeServo");
+        intakeLiftServo.setPosition(CLAW_OPEN);
+        intakeRotateServo = hardwareMap.get(com.qualcomm.robotcore.hardware.Servo.class, "intakeRotateServo");
 
         armLeft = hardwareMap.get(com.qualcomm.robotcore.hardware.Servo.class, "armLeftServo");
         armRight = hardwareMap.get(com.qualcomm.robotcore.hardware.Servo.class, "armRightServo");
