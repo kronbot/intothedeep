@@ -114,43 +114,31 @@ public class DrivingDualOp extends LinearOpMode {
         sleep(100);
 
         while (opModeIsActive() && !isStopRequested()) {
+            // Wheels
+            driveModeButton.updateButton(drivingGamepad.triangle);
+            driveModeButton.longPress();
+
+            reverseButton.updateButton(drivingGamepad.cross);
+            reverseButton.shortPress();
+            robotCentricDrive.setReverse(reverseButton.getShortToggle());
+            if (!driveModeButton.getLongToggle()) robotCentricDrive.run();
+            else fieldCentricDrive.run();
+
+            if (waitingRetraction.get())
+                continue;
+
             if (!waitingRetraction.get()) {
-
-                //test servo
-//                testServoButton.updateButton(utilityGamepad.triangle);
-//                if (testServoButton.shortPress()) {
-//                    isServoEnabled = !isServoEnabled; // Toggle state
-//
-//                    if (isServoEnabled) {
-//                        robot.testServo.getController().pwmEnable();
-//                        sleep(200);  // Allow time for the servo to receive the signal
-//                        robot.testServo.setPower(1.0); // Start moving
-//                    } else {
-//                        robot.testServo.setPower(0.0); // Stop servo before disabling
-//                        sleep(200);
-//                        robot.testServo.getController().pwmDisable();
-//                    }
-//                }
-
                  //Lift
                 robot.liftLeft.run(utilityGamepad.right_trigger - utilityGamepad.left_trigger);
                 robot.liftRight.run(utilityGamepad.right_trigger - utilityGamepad.left_trigger);
 
-                //Intake Lift
-//                intakeButton.updateButton(utilityGamepad.dpad_up);
-//                intakeButton.shortPress();
-//                robot.intakeLiftServo.setPosition(intakeButton.getShortToggle() ? INTAKE_LIFT_DOWN : INTAKE_LIFT_UP);
-
-                //Intake Rotation
-//                intakeRotationButton.updateButton(utilityGamepad.square);
-//                intakeRotationButton.shortPress();
-//                robot.intakeRotateServo.setPosition(intakeRotationButton.getShortToggle() ? INTAKE_ROTATE_LEFT : INTAKE_ROTATE_RIGHT);
-
                 if (extended) {
+                    //Intake Lift
                     intakeButton.updateButton(utilityGamepad.dpad_up);
                     intakeButton.shortPress();
                     robot.intakeLiftServo.setPosition(intakeButton.getShortToggle() ? INTAKE_LIFT_DOWN : INTAKE_LIFT_UP);
 
+                    //Intake Rotation
                     intakeRotationButton.updateButton(utilityGamepad.square);
                     intakeRotationButton.shortPress();
                     robot.intakeRotateServo.setPosition(intakeRotationButton.getShortToggle() ? INTAKE_ROTATE_LEFT : INTAKE_ROTATE_RIGHT);
@@ -255,15 +243,7 @@ public class DrivingDualOp extends LinearOpMode {
             } else if (retractButton.getShortToggle() && waitingRetraction.get()) retractButton.resetToggles();
             else if (extensionButton.getShortToggle() && waitingRetraction.get()) extensionButton.resetToggles();
 
-            // Wheels
-            driveModeButton.updateButton(drivingGamepad.triangle);
-            driveModeButton.longPress();
 
-            reverseButton.updateButton(drivingGamepad.cross);
-            reverseButton.shortPress();
-            robotCentricDrive.setReverse(reverseButton.getShortToggle());
-            if (!driveModeButton.getLongToggle()) robotCentricDrive.run();
-            else fieldCentricDrive.run();
 
             telemetry.update();
         }

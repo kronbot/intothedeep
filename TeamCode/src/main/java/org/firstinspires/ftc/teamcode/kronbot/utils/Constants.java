@@ -18,20 +18,18 @@ public class Constants {
 
     public static int BUTTON_LONG_PRESS_TIME = 750;
 
-
-    //test
     public static double INTAKE_LIFT_UP = 1;
     public static double INTAKE_LIFT_DOWN = 0.4;
-    public static double INTAKE_ROTATE_LEFT=0.2;
-    public static double INTAKE_ROTATE_RIGHT=0.4;
-    public static double INTAKE_ROTATE_DEGREE=0.3;
+    public static double INTAKE_ROTATE_LEFT=0;
+    public static double INTAKE_ROTATE_RIGHT=1;
+    public static double INTAKE_ROTATE_DEGREE=0.5;
 
     public static double ROBOT_SPEED = 1.0;
     public static double POWER_EXPONENT = 2.0;
 
     public static double LIFT_POWER = 1.0;
     public static double LIFT_REST_POWER = 0.0005;
-    public static double LIFT_REVERSE_POWER = 0.8;
+    public static double LIFT_REVERSE_POWER = 0.9;
     public static double LIFT_TOLERANCE = 50;
     public static int LIFT_INIT_POSITION = 0;
     public static int LIFT_ACTION_POSITION = 500;
@@ -57,7 +55,7 @@ public class Constants {
     public static double INTAKE_CLAW_SEMI_OPEN = 0.945;
 
     public static double INTAKE_LEFT_MIN = 0.65;
-    public static double INTAKE_LEFT_MAX = 0;
+    public static double INTAKE_LEFT_MAX = 5;
     public static double INTAKE_LEFT_UP = 0.65;
     public static double INTAKE_RIGHT_MIN = 0.87;
     public static double INTAKE_RIGHT_MAX = 0.25;
