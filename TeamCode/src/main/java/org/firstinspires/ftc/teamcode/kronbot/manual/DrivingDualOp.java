@@ -77,6 +77,7 @@ public class DrivingDualOp extends LinearOpMode {
     // Actions
     Button retractButton = new Button();
     Button extensionButton = new Button();
+    double xLeft = 0, yLeft = 0, xRight = 0, yRight = 0;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -99,6 +100,8 @@ public class DrivingDualOp extends LinearOpMode {
         sleep(100);
 
         while (opModeIsActive() && !isStopRequested()) {
+            updateInput();
+
             // Wheels
             drive();
 
@@ -113,20 +116,14 @@ public class DrivingDualOp extends LinearOpMode {
                     handleIntake();
 
 
-                //Claw
                 handleClaw();
 
-                // Extension
-                extensionButton.updateButton(utilityGamepad.circle);
-                extensionButton.shortPress();
                 if (extensionButton.getShortToggle() && !extended)
                     extend();
 
             }
 
             // Retraction
-            retractButton.updateButton(utilityGamepad.cross);
-            retractButton.shortPress();
             if (retractButton.getShortToggle() && !waitingRetraction.get() && extended)
                 retract();
             else if (retractButton.getShortToggle() && waitingRetraction.get()) retractButton.resetToggles();
@@ -134,17 +131,6 @@ public class DrivingDualOp extends LinearOpMode {
 
             telemetry.update();
         }
-    }
-
-    private void drive(){
-        driveModeButton.updateButton(drivingGamepad.triangle);
-        driveModeButton.longPress();
-
-        reverseButton.updateButton(drivingGamepad.cross);
-        reverseButton.shortPress();
-        robotCentricDrive.setReverse(reverseButton.getShortToggle());
-        if (!driveModeButton.getLongToggle()) robotCentricDrive.run();
-        else fieldCentricDrive.run();
     }
 
     private void INITPose(){
@@ -156,6 +142,44 @@ public class DrivingDualOp extends LinearOpMode {
 
         robot.intakeServoLeft.setPosition(INTAKE_LEFT_MAX);
         robot.intakeServoRight.setPosition(INTAKE_RIGHT_MAX);
+    }
+
+    private void updateInput(){
+        //Stick update
+        xLeft = gamepad2.left_stick_x;;
+        yLeft = gamepad2.left_stick_y;
+
+        xRight = gamepad2.right_stick_x;
+        yRight = gamepad2.right_stick_y;
+
+        //Drive
+        driveModeButton.updateButton(drivingGamepad.triangle);
+        driveModeButton.longPress();
+
+        reverseButton.updateButton(drivingGamepad.cross);
+        reverseButton.shortPress();
+
+        //Intake claw
+        clawButton.updateButton(utilityGamepad.dpad_right);
+        clawButton.shortPress();
+
+        //Intake Height
+        intakeButton.updateButton(utilityGamepad.dpad_up);
+        intakeButton.shortPress();
+
+        // Extension
+        extensionButton.updateButton(utilityGamepad.circle);
+        extensionButton.shortPress();
+
+        // Retraction
+        retractButton.updateButton(utilityGamepad.cross);
+        retractButton.shortPress();
+    }
+
+    private void drive(){
+        robotCentricDrive.setReverse(reverseButton.getShortToggle());
+        if (!driveModeButton.getLongToggle()) robotCentricDrive.run();
+        else fieldCentricDrive.run();
     }
 
     private void extend(){
@@ -243,21 +267,20 @@ public class DrivingDualOp extends LinearOpMode {
     }
 
     private void handleIntake(){
-        //Intake Lift
-        intakeButton.updateButton(utilityGamepad.dpad_up);
-        intakeButton.shortPress();
+        //Intake height
         robot.intakeLiftServo.setPosition(intakeButton.getShortToggle() ? INTAKE_LIFT_DOWN : INTAKE_LIFT_UP);
 
         //Intake Rotation
-        intakeRotationButton.updateButton(utilityGamepad.square);
+        /*intakeRotationButton.updateButton(utilityGamepad.square);
         intakeRotationButton.shortPress();
-        robot.intakeRotateServo.setPosition(intakeRotationButton.getShortToggle() ? INTAKE_ROTATE_LEFT : INTAKE_ROTATE_RIGHT);
+        robot.intakeRotateServo.setPosition(intakeRotationButton.getShortToggle() ? INTAKE_ROTATE_LEFT : INTAKE_ROTATE_RIGHT);*/
+
+        if((yRight * yRight + xRight * xRight)<(INTAKE_ROTATE_LEFT+INTAKE_ROTATE_RIGHT)*1f/2f) {xRight = 0; yRight = 1;}
+        robot.intakeRotateServo.setPosition(Math.max(INTAKE_ROTATE_LEFT, Math.min(((Math.atan2(xRight, yRight)+2.617994)/5.235988),INTAKE_ROTATE_RIGHT)));
     }
 
     private void handleClaw(){
         if (!waitingRetraction.get()) {
-            clawButton.updateButton(utilityGamepad.dpad_right);
-            clawButton.shortPress();
             if (!extended && !waitingRetraction.get()) {
                 if (clawButton.getShortToggle())
                     robot.claw.setPosition(CLAW_OPEN);
