@@ -14,15 +14,14 @@ public class Constants {
     public final static String TEST_GROUP = "test";
     public final static String MAIN_GROUP = "main";
 
+    public static double ROTATION_ADDITION=2.617994;
+    public static double ROTATION_DIVISION=2;
     public static double CONTROLLER_DEADZONE = 0.15;
 
     public static int BUTTON_LONG_PRESS_TIME = 750;
 
-    public static double INTAKE_LIFT_UP = 1;
-    public static double INTAKE_LIFT_DOWN = 0.4;
     public static double INTAKE_ROTATE_LEFT=0;
     public static double INTAKE_ROTATE_RIGHT=1;
-    public static double INTAKE_ROTATE_DEGREE=0.5;
 
     public static double ROBOT_SPEED = 1.0;
     public static double POWER_EXPONENT = 2.0;
@@ -34,7 +33,6 @@ public class Constants {
     public static int LIFT_INIT_POSITION = 0;
     public static int LIFT_ACTION_POSITION = 500;
     public static int LIFT_MAX_POSITION = 2500;
-    public static int LIFT_CHAMBER_POSITION = 280;
 
     public static double CAMERA_TRASH_HOLD = 0.2;
     public static int BLUE_HUE_LOW = 0;
@@ -43,16 +41,16 @@ public class Constants {
     public static double ARM_LEFT_INIT = 0.83;
     public static double ARM_LEFT_MIN = 0.83;
     public static double ARM_LEFT_MAX = 0.25;
-    public static double ARM_RIGHT_INIT = 0.66;
+    public static double ARM_RIGHT_INIT = 0.68;
     public static double ARM_RIGHT_MIN = 0.68;
-    public static double ARM_RIGHT_MAX = 0.15;
+    public static double ARM_RIGHT_MAX = 0.25;
 
     public static double CLAW_CLOSE = 0.64;
     public static double CLAW_OPEN = 0.75;
 
-    public static double INTAKE_CLAW_CLOSE = 0.96;
-    public static double INTAKE_CLAW_OPEN = 0.9;
-    public static double INTAKE_CLAW_SEMI_OPEN = 0.945;
+    public static double INTAKE_CLAW_CLOSE = 1;
+    public static double INTAKE_CLAW_OPEN = 0;
+   // public static double INTAKE_CLAW_SEMI_OPEN = 0.945;
 
     public static double INTAKE_LEFT_MIN = 0.65;
     public static double INTAKE_LEFT_MAX = 5;
@@ -62,14 +60,12 @@ public class Constants {
     public static double INTAKE_RIGHT_UP = 0.87;
 
 
-    public static double SLIDE_LEFT_INIT = 0.58;
-    public static double SLIDE_LEFT_CLOSED = 0.56;
+    public static double SLIDE_LEFT_INIT = 0.56;
+    public static double SLIDE_LEFT_CLOSED = 0.43;
     public static double SLIDE_LEFT_OPENED = 0.26;
-    public static double SLIDE_LEFT_SEMI_CLOSED = 0.43; //0.4
-    public static double SLIDE_RIGHT_INIT = 0.4;
-    public static double SLIDE_RIGHT_CLOSED = 0.38;
+    public static double SLIDE_RIGHT_INIT = 0.38;
+    public static double SLIDE_RIGHT_CLOSED = 0.25;
     public static double SLIDE_RIGHT_OPENED = 0.07;
-    public static double SLIDE_RIGHT_SEMI_CLOSED =0.25; //0.28
     public static LogoFacingDirection LOGO_FACING_DIRECTION = LogoFacingDirection.LEFT;
     public static UsbFacingDirection USB_FACING_DIRECTION = UsbFacingDirection.UP;
 }
