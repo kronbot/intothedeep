@@ -11,12 +11,16 @@ import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.SLIDE_RIGHT
 import com.qualcomm.hardware.bosch.BHI260IMU;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
+//
+// import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.kronbot.utils.drivers.LiftDriver;
 import org.firstinspires.ftc.teamcode.kronbot.utils.drivers.MotorDriver;
 import org.firstinspires.ftc.teamcode.kronbot.utils.wrappers.ControlHubGyroscope;
 import org.firstinspires.ftc.teamcode.kronbot.utils.wrappers.Motor;
+import org.firstinspires.ftc.teamcode.kronbot.utils.wrappers.Servo;
+
+
 
 public class KronBot {
     public MotorDriver motors;
@@ -32,8 +36,9 @@ public class KronBot {
     public com.qualcomm.robotcore.hardware.Servo intakeServoRight;
     public com.qualcomm.robotcore.hardware.Servo intakeSlideServoLeft;
     public com.qualcomm.robotcore.hardware.Servo intakeSlideServoRight;
-    public com.qualcomm.robotcore.hardware.Servo intakeClawServo;
-    public com.qualcomm.robotcore.hardware.Servo intakeRotateServo;
+
+    public Servo intakeWheelsRight;
+    public Servo intakeWheelsLeft;
 
 
     public ControlHubGyroscope gyroscope;
@@ -64,12 +69,17 @@ public class KronBot {
     public void initServo(HardwareMap hardwareMap) {
 
         claw = hardwareMap.get(com.qualcomm.robotcore.hardware.Servo.class, "clawServo");
+       // claw.setDirection(com.qualcomm.robotcore.hardware.Servo.Direction.REVERSE);
 
-        intakeClawServo = hardwareMap.get(com.qualcomm.robotcore.hardware.Servo.class, "intakeServo");
-        intakeClawServo.setPosition(CLAW_OPEN);
 
-        intakeRotateServo = hardwareMap.get(com.qualcomm.robotcore.hardware.Servo.class, "intakeRotateServo");
-        intakeRotateServo.setDirection(com.qualcomm.robotcore.hardware.Servo.Direction.REVERSE);
+        intakeWheelsRight = new Servo(hardwareMap);
+        intakeWheelsRight.init("intake2", true, false, 0, 0, 0);
+        intakeWheelsRight.setReversed(true);
+        intakeWheelsLeft = new Servo(hardwareMap);
+        intakeWheelsLeft.init("intake", true, false, 0, 0, 0);
+        intakeWheelsLeft.setReversed(true);
+        intakeWheelsLeft.runContinuous(false, false);
+        intakeWheelsRight.runContinuous(false, false);
 
         armLeft = hardwareMap.get(com.qualcomm.robotcore.hardware.Servo.class, "armLeftServo");
         armRight = hardwareMap.get(com.qualcomm.robotcore.hardware.Servo.class, "armRightServo");
