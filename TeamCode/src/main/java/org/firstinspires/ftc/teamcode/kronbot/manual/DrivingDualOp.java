@@ -7,27 +7,22 @@ import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_RIGHT_M
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.CLAW_CLOSE;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.CLAW_OPEN;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.INTAKE_CLAW_CLOSE;
-import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.INTAKE_CLAW_SEMI_OPEN;
-import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.INTAKE_LEFT_MAX;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.INTAKE_CLAW_OPEN;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.INTAKE_LEFT_MAX;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.INTAKE_LEFT_UP;
-import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.INTAKE_LIFT_DOWN;
-import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.INTAKE_LIFT_UP;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.INTAKE_RIGHT_MAX;
-import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.INTAKE_LEFT_MIN;
-import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.INTAKE_RIGHT_MIN;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.INTAKE_RIGHT_UP;
-import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.INTAKE_ROTATE_DEGREE;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.INTAKE_ROTATE_LEFT;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.INTAKE_ROTATE_RIGHT;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.LIFT_ACTION_POSITION;
-import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.LIFT_CHAMBER_POSITION;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ROTATION_ADDITION;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ROTATION_DIVISION;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.SLIDE_LEFT_INIT;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.SLIDE_LEFT_OPENED;
-import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.SLIDE_LEFT_SEMI_CLOSED;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.SLIDE_RIGHT_INIT;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.SLIDE_RIGHT_OPENED;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.SLIDE_LEFT_CLOSED;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.SLIDE_RIGHT_CLOSED;
-import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.SLIDE_RIGHT_SEMI_CLOSED;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -50,15 +45,15 @@ import java.util.concurrent.atomic.AtomicBoolean;
  */
 @TeleOp(name = "Dual Driving", group = Constants.MAIN_GROUP)
 public class DrivingDualOp extends LinearOpMode {
-        AtomicBoolean waitingRetraction = new AtomicBoolean(false);
-        boolean extended = false;
-        boolean isServoEnabled = true;
+    AtomicBoolean waitingRetraction = new AtomicBoolean(false);
+    boolean extended = false;
+    boolean isServoEnabled = true;
     private final KronBot robot = new KronBot();
 
     RobotCentricDrive robotCentricDrive;
     FieldCentricDrive fieldCentricDrive;
 
-    ///CONTROL SETUP
+    /// CONTROL SETUP
     Gamepad drivingGamepad;
     Gamepad utilityGamepad;
     // Wheels
@@ -68,16 +63,15 @@ public class DrivingDualOp extends LinearOpMode {
     Button clawButton = new Button();
     //Intake Lift
     Button intakeButton = new Button();
-    //Intake Rotation
-    Button intakeRotationButton = new Button();
+    //Intake Angle
+    Button intakeAngleButton = new Button();
     // Arm
     Button armButton = new Button();
-    //test servo
-//        Button testServoButton = new Button();
     // Actions
     Button retractButton = new Button();
     Button extensionButton = new Button();
-    double xLeft = 0, yLeft = 0, xRight = 0, yRight = 0;
+    double xRight = 0, yRight = 0;
+    double increment=0.01;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -101,7 +95,6 @@ public class DrivingDualOp extends LinearOpMode {
 
         while (opModeIsActive() && !isStopRequested()) {
             updateInput();
-
             // Wheels
             drive();
 
@@ -109,12 +102,11 @@ public class DrivingDualOp extends LinearOpMode {
                 continue;
 
             if (!waitingRetraction.get()) {
-                 //Lift
+                //Lift
                 handleLift();
 
                 if (extended)
                     handleIntake();
-
 
                 handleClaw();
 
@@ -126,46 +118,63 @@ public class DrivingDualOp extends LinearOpMode {
             // Retraction
             if (retractButton.getShortToggle() && !waitingRetraction.get() && extended)
                 retract();
-            else if (retractButton.getShortToggle() && waitingRetraction.get()) retractButton.resetToggles();
-            else if (extensionButton.getShortToggle() && waitingRetraction.get()) extensionButton.resetToggles();
+            else if (retractButton.getShortToggle() && waitingRetraction.get())
+                retractButton.resetToggles();
+            else if (extensionButton.getShortToggle() && waitingRetraction.get())
+                extensionButton.resetToggles();
 
             telemetry.update();
         }
+
+        //manual slide
+        slide();
     }
 
-    private void INITPose(){
-        robot.intakeSlideServoLeft.setPosition(SLIDE_LEFT_CLOSED);
-        robot.intakeSlideServoRight.setPosition(SLIDE_RIGHT_CLOSED);
+    private void slide() {
+            if (utilityGamepad.right_bumper && robot.intakeSlideServoLeft.getPosition() < SLIDE_LEFT_OPENED)
+                robot.intakeSlideServoLeft.setPosition(robot.intakeSlideServoLeft.getPosition() + increment);
+            else if (utilityGamepad.left_bumper && robot.intakeSlideServoLeft.getPosition() > SLIDE_LEFT_CLOSED)
+                robot.intakeSlideServoLeft.setPosition(robot.intakeSlideServoLeft.getPosition() - increment);
+            if (utilityGamepad.left_bumper && robot.intakeSlideServoRight.getPosition() < SLIDE_RIGHT_OPENED)
+                robot.intakeSlideServoRight.setPosition(robot.intakeSlideServoRight.getPosition() + increment);
+            else if (utilityGamepad.right_bumper && robot.intakeSlideServoRight.getPosition() > SLIDE_LEFT_CLOSED)
+                robot.intakeSlideServoRight.setPosition(robot.intakeSlideServoRight.getPosition() - increment);
+    }
+
+    private void INITPose() {
+        robot.intakeSlideServoLeft.setPosition(SLIDE_LEFT_INIT);
+        robot.intakeSlideServoRight.setPosition(SLIDE_RIGHT_INIT);
 
         robot.armRight.setPosition(ARM_RIGHT_MIN);
         robot.armLeft.setPosition(ARM_LEFT_MIN);
 
         robot.intakeServoLeft.setPosition(INTAKE_LEFT_MAX);
         robot.intakeServoRight.setPosition(INTAKE_RIGHT_MAX);
+
+        robot.claw.setPosition(CLAW_OPEN);
     }
 
-    private void updateInput(){
-        //Stick update
-        xLeft = gamepad2.left_stick_x;;
-        yLeft = gamepad2.left_stick_y;
-
+    private void updateInput() {
+        //Update stick input
         xRight = gamepad2.right_stick_x;
         yRight = gamepad2.right_stick_y;
 
         //Drive
         driveModeButton.updateButton(drivingGamepad.triangle);
         driveModeButton.longPress();
-
         reverseButton.updateButton(drivingGamepad.cross);
         reverseButton.shortPress();
 
-        //Intake claw
+        //Arm Claw
         clawButton.updateButton(utilityGamepad.dpad_right);
         clawButton.shortPress();
 
-        //Intake Height
-        intakeButton.updateButton(utilityGamepad.dpad_up);
+        //Intake Claw
+        intakeButton.updateButton(utilityGamepad.square);
         intakeButton.shortPress();
+
+        //Intake Angle
+        intakeAngleButton.updateButton(utilityGamepad.triangle);
 
         // Extension
         extensionButton.updateButton(utilityGamepad.circle);
@@ -176,25 +185,29 @@ public class DrivingDualOp extends LinearOpMode {
         retractButton.shortPress();
     }
 
-    private void drive(){
+    private void drive() {
         robotCentricDrive.setReverse(reverseButton.getShortToggle());
         if (!driveModeButton.getLongToggle()) robotCentricDrive.run();
         else fieldCentricDrive.run();
     }
 
-    private void extend(){
+    private void extend() {
         extended = true;
 
         intakeButton.resetToggles();
+
+        robot.intakeClawServo.setPosition(INTAKE_CLAW_OPEN);
 
         robot.intakeSlideServoRight.setPosition(SLIDE_RIGHT_OPENED);
         robot.intakeSlideServoLeft.setPosition(SLIDE_LEFT_OPENED);
 
         robot.intakeServoRight.setPosition(INTAKE_RIGHT_MAX);
         robot.intakeServoLeft.setPosition(INTAKE_LEFT_MAX);
+
+        intakeAngleButton.resetToggles();
     }
 
-    private void retract(){
+    private void retract() {
         extended = false;
 
         new Thread(() -> {
@@ -213,26 +226,18 @@ public class DrivingDualOp extends LinearOpMode {
             robot.intakeServoRight.setPosition(INTAKE_RIGHT_UP);
             robot.intakeServoLeft.setPosition(INTAKE_LEFT_UP);
 
-            robot.intakeSlideServoRight.setPosition(SLIDE_RIGHT_SEMI_CLOSED);
-            robot.intakeSlideServoLeft.setPosition(SLIDE_LEFT_SEMI_CLOSED);
+            robot.intakeSlideServoRight.setPosition(SLIDE_RIGHT_CLOSED);
+            robot.intakeSlideServoLeft.setPosition(SLIDE_LEFT_CLOSED);
 
             try {
-                telemetry.addData("Retraction", "Claw opening...");
                 telemetry.update();
                 robot.claw.setPosition(CLAW_OPEN);
                 Thread.sleep(500);
 
-                intakeRotationButton.resetToggles();
-                robot.intakeRotateServo.setPosition(INTAKE_ROTATE_DEGREE);
-
-                Thread.sleep(500);
-
                 robot.claw.setPosition(CLAW_CLOSE);
-
                 Thread.sleep(500);
 
-                intakeButton.resetToggles();
-                robot.intakeLiftServo.setPosition(INTAKE_LIFT_UP);
+                robot.intakeClawServo.setPosition(INTAKE_CLAW_OPEN);
 
                 waitingRetraction.set(false);
             } catch (InterruptedException e) {
@@ -243,7 +248,7 @@ public class DrivingDualOp extends LinearOpMode {
         }).start();
     }
 
-    private void handleLift(){
+    private void handleLift() {
         robot.liftLeft.run(utilityGamepad.right_trigger - utilityGamepad.left_trigger);
         robot.liftRight.run(utilityGamepad.right_trigger - utilityGamepad.left_trigger);
 
@@ -266,20 +271,29 @@ public class DrivingDualOp extends LinearOpMode {
         }
     }
 
-    private void handleIntake(){
-        //Intake height
-        robot.intakeLiftServo.setPosition(intakeButton.getShortToggle() ? INTAKE_LIFT_DOWN : INTAKE_LIFT_UP);
+    private void handleIntake() {
+        //Intake Claw
+        if(intakeButton.getShortToggle()) {
+            robot.intakeClawServo.setPosition(INTAKE_CLAW_OPEN);
+        } else {
+            robot.intakeClawServo.setPosition(INTAKE_CLAW_CLOSE);
+        }
 
         //Intake Rotation
-        /*intakeRotationButton.updateButton(utilityGamepad.square);
-        intakeRotationButton.shortPress();
-        robot.intakeRotateServo.setPosition(intakeRotationButton.getShortToggle() ? INTAKE_ROTATE_LEFT : INTAKE_ROTATE_RIGHT);*/
-
         if((yRight * yRight + xRight * xRight)<(INTAKE_ROTATE_LEFT+INTAKE_ROTATE_RIGHT)*1f/2f) {xRight = 0; yRight = 1;}
-        robot.intakeRotateServo.setPosition(Math.max(INTAKE_ROTATE_LEFT, Math.min(((Math.atan2(xRight, yRight)+2.617994)/5.235988),INTAKE_ROTATE_RIGHT)));
+        robot.intakeRotateServo.setPosition(Math.max(INTAKE_ROTATE_LEFT, Math.min(((Math.atan2(xRight, yRight)+ROTATION_ADDITION)/ROTATION_DIVISION),INTAKE_ROTATE_RIGHT)));
+
+        //Intake Angle
+        if(intakeAngleButton.getShortToggle()) {
+            robot.intakeServoRight.setPosition(INTAKE_RIGHT_UP);
+            robot.intakeServoLeft.setPosition(INTAKE_LEFT_UP);
+        } else {
+            robot.intakeServoRight.setPosition(INTAKE_RIGHT_MAX);
+            robot.intakeServoLeft.setPosition(INTAKE_LEFT_MAX);
+        }
     }
 
-    private void handleClaw(){
+    private void handleClaw() {
         if (!waitingRetraction.get()) {
             if (!extended && !waitingRetraction.get()) {
                 if (clawButton.getShortToggle())
@@ -288,4 +302,5 @@ public class DrivingDualOp extends LinearOpMode {
             }
         }
     }
+
 }
