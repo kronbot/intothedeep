@@ -23,9 +23,14 @@ public class AutonomousConstants {
     public static Coordinates StartPoseLeftBlue = new Coordinates(12, 67 - 15/2, 90);
     public static Coordinates StartPoseRightBlue = new Coordinates(-35, 67 - 15/2, 90);
 
-    public static Coordinates FirstPose = new Coordinates(2, -1, 0);
-    public static Coordinates SecondPose = new Coordinates(1.5, 0, 0);
-    public static Coordinates ThirdPose = new Coordinates(-2, -20, 0);
+    public static Coordinates FirstPose = new Coordinates(26, -0.7, 0);
+    public static Coordinates SecondPose = new Coordinates(26, -12, 0);
+    public static Coordinates ThirdPose = new Coordinates(46, -13, 0);
+    public static Coordinates FourthPose = new Coordinates(46, -25, 0);
+    public static Coordinates FifthPose = new Coordinates(2, -25, 0);
+    public static Coordinates SixthPose = new Coordinates(46, -20, 0);
+    public static Coordinates SeventhPose = new Coordinates(46, -30, 0);
+
     public static Coordinates Pose1 = new Coordinates(-15, 1.5, 0);
     public static Coordinates Pose2 = new Coordinates(-20, -10, 0);
     public static Coordinates Pose3 = new Coordinates(-2, 0, 0);

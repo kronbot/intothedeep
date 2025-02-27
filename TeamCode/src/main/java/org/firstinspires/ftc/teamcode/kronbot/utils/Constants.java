@@ -43,7 +43,7 @@ public class Constants {
     public static double ARM_LEFT_MAX = 0.36;
     public static double ARM_RIGHT_INIT = 0.65;
     public static double ARM_RIGHT_MIN = 0.65;
-    public static double ARM_RIGHT_MAX = 0.1;
+    public static double ARM_RIGHT_MAX = 0.18;
 
     public static double CLAW_CLOSE = 0.85;
     public static double CLAW_OPEN = 1;

@@ -6,17 +6,11 @@ import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_RIGHT_M
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_RIGHT_MAX;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.CLAW_CLOSE;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.CLAW_OPEN;
-import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.INTAKE_CLAW_CLOSE;
-import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.INTAKE_CLAW_OPEN;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.INTAKE_LEFT_MAX;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.INTAKE_LEFT_UP;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.INTAKE_RIGHT_MAX;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.INTAKE_RIGHT_UP;
-import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.INTAKE_ROTATE_LEFT;
-import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.INTAKE_ROTATE_RIGHT;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.LIFT_ACTION_POSITION;
-import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ROTATION_ADDITION;
-import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ROTATION_DIVISION;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.SLIDE_LEFT_INIT;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.SLIDE_LEFT_OPENED;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.SLIDE_RIGHT_INIT;
@@ -206,9 +200,6 @@ public class MainDrivingWheelsOp extends LinearOpMode {
             robot.armRight.setPosition(ARM_RIGHT_MIN);
             robot.armLeft.setPosition(ARM_LEFT_MIN);
 
-            //clawButton.resetToggles();
-            //robot.claw.setPosition(CLAW_OPEN);
-
             robot.intakeServoRight.setPosition(INTAKE_RIGHT_UP);
             robot.intakeServoLeft.setPosition(INTAKE_LEFT_UP);
 
@@ -274,13 +265,11 @@ public class MainDrivingWheelsOp extends LinearOpMode {
     }
 
     private void handleClaw() {
-        //if (!waitingRetraction.get()) {
             if (!extended && !waitingRetraction.get()) {
                 if (clawButton.getShortToggle())
                     robot.claw.setPosition(CLAW_OPEN);
                 else robot.claw.setPosition(CLAW_CLOSE);
             }
-        //}
     }
 
 }
