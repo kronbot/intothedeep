@@ -14,14 +14,16 @@ public class Constants {
     public final static String TEST_GROUP = "test";
     public final static String MAIN_GROUP = "main";
 
-    public static double ROTATION_ADDITION=2.617994;
-    public static double ROTATION_DIVISION=2;
+    public static int BUTTON_LONG_PRESS_TIME = 750;
     public static double CONTROLLER_DEADZONE = 0.15;
 
-    public static int BUTTON_LONG_PRESS_TIME = 750;
-
+    public static double ROTATION_ADDITION=2.6;
+    public static double ROTATION_DIVISION=2;
+    public static double INTAKE_LIFT_UP = 1.0;
+    public static double INTAKE_LIFT_DOWN = 0.4;
     public static double INTAKE_ROTATE_LEFT=0;
     public static double INTAKE_ROTATE_RIGHT=1;
+    public static double INTAKE_ROTATE_DEGREE=0.5;
 
     public static double ROBOT_SPEED = 1.0;
     public static double POWER_EXPONENT = 2.0;
@@ -48,10 +50,6 @@ public class Constants {
     public static double CLAW_CLOSE = 0.85;
     public static double CLAW_OPEN = 1;
 
-    public static double INTAKE_CLAW_CLOSE = 1;
-    public static double INTAKE_CLAW_OPEN = 0;
-   // public static double INTAKE_CLAW_SEMI_OPEN = 0.945;
-
     public static double INTAKE_LEFT_MIN = 0.55;
     public static double INTAKE_LEFT_MAX = 0.5;
     public static double INTAKE_LEFT_UP = 0.55;
@@ -66,6 +64,9 @@ public class Constants {
     public static double SLIDE_RIGHT_INIT = 0.34;
     public static double SLIDE_RIGHT_CLOSED = 0.34;
     public static double SLIDE_RIGHT_OPENED = 0.07;
+
+    public static double SLIDE_LEFT_SEMI_CLOSED = 0.43;
+    public static double SLIDE_RIGHT_SEMI_CLOSED =0.25;
     public static LogoFacingDirection LOGO_FACING_DIRECTION = LogoFacingDirection.LEFT;
     public static UsbFacingDirection USB_FACING_DIRECTION = UsbFacingDirection.UP;
 }
