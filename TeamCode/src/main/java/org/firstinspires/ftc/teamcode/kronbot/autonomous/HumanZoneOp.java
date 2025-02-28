@@ -3,16 +3,25 @@ package org.firstinspires.ftc.teamcode.kronbot.autonomous;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_LEFT_MIN;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_RIGHT_MIN;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.CLAW_CLOSE;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.CLAW_OPEN;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.INTAKE_RIGHT_MAX;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.LIFT_MAX_POSITION;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.SLIDE_LEFT_CLOSED;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.SLIDE_RIGHT_CLOSED;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.autonomous.AutonomousConstants.EleventhPose;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.autonomous.AutonomousConstants.FifthPose;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.autonomous.AutonomousConstants.FirstPose;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.autonomous.AutonomousConstants.FourthPose;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.autonomous.AutonomousConstants.NinthPose;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.autonomous.AutonomousConstants.Pose1;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.autonomous.AutonomousConstants.Pose2;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.autonomous.AutonomousConstants.Pose3;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.autonomous.AutonomousConstants.SecondPose;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.autonomous.AutonomousConstants.SeventhPose;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.autonomous.AutonomousConstants.SixthPose;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.autonomous.AutonomousConstants.TenthPose;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.autonomous.AutonomousConstants.ThirdPose;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.autonomous.AutonomousConstants.EigthPose;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.autonomous.AutonomousConstants.coordinatesConvert;
 
 import com.acmerobotics.dashboard.FtcDashboard;
@@ -51,6 +60,17 @@ public class HumanZoneOp extends LinearOpMode {
         Pose2d pose5 = coordinatesConvert(FifthPose);
         Pose2d pose6 = coordinatesConvert(SixthPose);
         Pose2d pose7 = coordinatesConvert(SeventhPose);
+        Pose2d pose8 = coordinatesConvert(EigthPose);
+        Pose2d pose9 = coordinatesConvert(NinthPose);
+        Pose2d pose10 = coordinatesConvert(TenthPose);
+      Pose2d pose11 = coordinatesConvert(EleventhPose);
+        Pose2d poseA = coordinatesConvert(Pose1);
+        Pose2d poseB = coordinatesConvert(Pose2);
+//
+//        hardwareMap.servo.get("armRightServo").setPosition(ARM_RIGHT_MIN);
+//        hardwareMap.servo.get("armLeftServo").setPosition(ARM_LEFT_MIN);
+//        hardwareMap.servo.get("clawServo").setPosition(CLAW_CLOSE);
+
 
         drive.setPoseEstimate(startPose);
 
@@ -60,8 +80,66 @@ public class HumanZoneOp extends LinearOpMode {
 
         waitForStart();
 
+
+        robot.intakeSlideServoLeft.setPosition(SLIDE_LEFT_CLOSED);
+        robot.intakeSlideServoRight.setPosition(SLIDE_RIGHT_CLOSED);
+        robot.intakeClawServo.setPosition(CLAW_OPEN);
+        robot.intakeServoRight.setPosition(INTAKE_RIGHT_MAX);
         if (opModeIsActive()) {
             telemetry.update();
+//            TrajectorySequence trajectoryToPoseA = drive.trajectorySequenceBuilder(startPose)
+//                    .lineTo(new Vector2d(poseA.getX(), poseA.getY()))
+//                    .build();
+//            drive.followTrajectorySequence(trajectoryToPoseA);
+//
+//            TrajectorySequence trajectoryToPoseB = drive.trajectorySequenceBuilder(poseA)
+//                    .lineTo(new Vector2d(poseB.getX(), poseB.getY()))
+//                    .turn(Math.toRadians(25))
+//                    .build();
+//
+//            drive.followTrajectorySequence(trajectoryToPoseB);
+//
+//            robot.liftLeft.setTargetPosition(LIFT_MAX_POSITION);
+//            robot.liftRight.setTargetPosition(LIFT_MAX_POSITION);
+//
+//            robot.liftLeft.setPower(1.0);
+//            robot.liftRight.setPower(1.0);
+//
+//            sleep(500);
+//            robot.armRight.setPosition(Constants.ARM_RIGHT_MAX);
+//            robot.armLeft.setPosition(Constants.ARM_LEFT_MAX);
+//
+//            while (robot.liftLeft.isBusy() && robot.liftRight.isBusy() && opModeIsActive()) {
+//                telemetry.addData("Lift Left Pos", robot.liftLeft.getCurrentPosition());
+//                telemetry.addData("Lift Right Pos", robot.liftRight.getCurrentPosition());
+//                telemetry.update();
+//            }
+//
+//            sleep(500);
+//            hardwareMap.servo.get("clawServo").setPosition(Constants.CLAW_OPEN); //drop sample in basket
+//
+//            sleep(100);
+//            //retract lift and arm
+//            hardwareMap.servo.get("clawServo").setPosition(CLAW_CLOSE);
+//            hardwareMap.servo.get("armLeftServo").setPosition(ARM_LEFT_MIN);
+//            hardwareMap.servo.get("armRightServo").setPosition(ARM_RIGHT_MIN);
+//
+//            robot.liftLeft.setTargetPosition(0);
+//            robot.liftRight.setTargetPosition(0);
+//            robot.liftLeft.setPower(-1);
+//            robot.liftRight.setPower(-1);
+//
+//            while (robot.liftLeft.isBusy() && robot.liftRight.isBusy() && opModeIsActive()) {
+//                telemetry.addData("Lift Left Pos", robot.liftLeft.getCurrentPosition());
+//                telemetry.addData("Lift Right Pos", robot.liftRight.getCurrentPosition());
+//                telemetry.update();
+//            }
+//            robot.liftLeft.setPower(0);
+//            robot.liftRight.setPower(0);
+//
+//            drive.setPoseEstimate(startPose);
+
+
 
             TrajectorySequence trajectoryToFirstPose = drive.trajectorySequenceBuilder(startPose)
                     .lineTo(new Vector2d(pose1.getX(), pose1.getY()))
@@ -96,6 +174,32 @@ public class HumanZoneOp extends LinearOpMode {
                     .lineTo(new Vector2d(pose7.getX(), pose7.getY()))
                     .build();
             drive.followTrajectorySequence(trajectoryToSeventhPose);
+
+            TrajectorySequence trajectoryToEightPose = drive.trajectorySequenceBuilder(pose7)
+                    .lineTo(new Vector2d(pose8.getX(), pose8.getY()))
+                    .build();
+            drive.followTrajectorySequence(trajectoryToEightPose);
+
+            TrajectorySequence trajectoryToNinthPose = drive.trajectorySequenceBuilder(pose8)
+                    .lineTo(new Vector2d(pose9.getX(), pose9.getY()))
+                    .build();
+            drive.followTrajectorySequence(trajectoryToNinthPose);
+
+            TrajectorySequence trajectoryToTenthPose = drive.trajectorySequenceBuilder(pose9)
+                    .lineTo(new Vector2d(pose10.getX(), pose10.getY()))
+                    .build();
+            drive.followTrajectorySequence(trajectoryToTenthPose);
+//
+            TrajectorySequence trajectoryToEleventhPose = drive.trajectorySequenceBuilder(pose10)
+                    .lineTo(new Vector2d(pose11.getX(), pose11.getY()))
+                    .build();
+            drive.followTrajectorySequence(trajectoryToEleventhPose);
+            telemetry.update();
+
+//            TrajectorySequence trajectoryToTwelvethPose = drive.trajectorySequenceBuilder(pose11)
+//                    .lineTo(new Vector2d(pose12.getX(), pose12.getY()))
+//                    .build();
+//            drive.followTrajectorySequence(trajectoryToTwelvethPose);
             telemetry.update();
         }
 

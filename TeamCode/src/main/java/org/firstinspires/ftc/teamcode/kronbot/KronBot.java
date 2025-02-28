@@ -75,7 +75,7 @@ public class KronBot {
         intakeClawServo = hardwareMap.get(com.qualcomm.robotcore.hardware.Servo.class, "intakeServo");
         intakeClawServo.setPosition(CLAW_OPEN);
         intakeLiftServo = hardwareMap.get(com.qualcomm.robotcore.hardware.Servo.class, "intakeServo");
-        intakeLiftServo.setPosition(CLAW_OPEN);
+        intakeLiftServo.setDirection(com.qualcomm.robotcore.hardware.Servo.Direction.REVERSE);
         intakeRotateServo = hardwareMap.get(com.qualcomm.robotcore.hardware.Servo.class, "intakeRotateServo");
 
         armLeft = hardwareMap.get(com.qualcomm.robotcore.hardware.Servo.class, "armLeftServo");

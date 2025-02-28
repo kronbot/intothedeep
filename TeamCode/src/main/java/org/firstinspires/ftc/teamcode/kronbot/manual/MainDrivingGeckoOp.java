@@ -4,6 +4,7 @@ import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_LEFT_MI
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_LEFT_MAX;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_RIGHT_MIN;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_RIGHT_MAX;
+import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_TEST;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.CLAW_CLOSE;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.CLAW_OPEN;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.INTAKE_LEFT_MAX;
@@ -53,7 +54,7 @@ public class MainDrivingGeckoOp extends LinearOpMode {
     RobotCentricDrive robotCentricDrive;
     FieldCentricDrive fieldCentricDrive;
 
-    ///CONTROL SETUP
+    /// CONTROL SETUP
     Gamepad drivingGamepad;
     Gamepad utilityGamepad;
     // Wheels
@@ -67,11 +68,12 @@ public class MainDrivingGeckoOp extends LinearOpMode {
     Button intakeRotationButton = new Button();
     // Arm
     Button armButton = new Button();
+    Button armButtontest = new Button();
     // Actions
     Button retractButton = new Button();
     Button extensionButton = new Button();
     double xLeft = 0, yLeft = 0, xRight = 0, yRight = 0;
-    double increment=0.01;
+    double increment = 0.01;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -125,14 +127,16 @@ public class MainDrivingGeckoOp extends LinearOpMode {
             retractButton.shortPress();
             if (retractButton.getShortToggle() && !waitingRetraction.get() && extended)
                 retract();
-            else if (retractButton.getShortToggle() && waitingRetraction.get()) retractButton.resetToggles();
-            else if (extensionButton.getShortToggle() && waitingRetraction.get()) extensionButton.resetToggles();
+            else if (retractButton.getShortToggle() && waitingRetraction.get())
+                retractButton.resetToggles();
+            else if (extensionButton.getShortToggle() && waitingRetraction.get())
+                extensionButton.resetToggles();
 
             telemetry.update();
         }
     }
 
-    private void Drive(){
+    private void Drive() {
         driveModeButton.updateButton(drivingGamepad.triangle);
         driveModeButton.longPress();
 
@@ -143,16 +147,16 @@ public class MainDrivingGeckoOp extends LinearOpMode {
         else fieldCentricDrive.run();
     }
 
-    private void INITPose(){
+    private void INITPose() {
         robot.intakeSlideServoLeft.setPosition(SLIDE_LEFT_CLOSED);
         robot.intakeSlideServoRight.setPosition(SLIDE_RIGHT_CLOSED);
-
-                robot.intakeServoRight.setPosition(INTAKE_RIGHT_MAX);
+        robot.intakeClawServo.setPosition(CLAW_OPEN);
+        robot.intakeServoRight.setPosition(INTAKE_RIGHT_MAX);
     }
 
-    private void updateInput(){
+    private void updateInput() {
         //Stick update
-        xLeft = gamepad2.left_stick_x;;
+        xLeft = gamepad2.left_stick_x;
         yLeft = gamepad2.left_stick_y;
 
         xRight = gamepad2.right_stick_x;
@@ -182,13 +186,7 @@ public class MainDrivingGeckoOp extends LinearOpMode {
         retractButton.shortPress();
     }
 
-    private void drive(){
-        robotCentricDrive.setReverse(reverseButton.getShortToggle());
-        if (!driveModeButton.getLongToggle()) robotCentricDrive.run();
-        else fieldCentricDrive.run();
-    }
-
-    private void extend(){
+    private void extend() {
         extended = true;
 
         intakeButton.resetToggles();
@@ -198,9 +196,12 @@ public class MainDrivingGeckoOp extends LinearOpMode {
 
         robot.intakeServoRight.setPosition(INTAKE_RIGHT_MAX);
         robot.intakeServoLeft.setPosition(INTAKE_LEFT_MAX);
+
+
+        robot.claw.setPosition(CLAW_OPEN);
     }
 
-    private void retract(){
+    private void retract() {
         extended = false;
 
         new Thread(() -> {
@@ -213,27 +214,23 @@ public class MainDrivingGeckoOp extends LinearOpMode {
             robot.armRight.setPosition(ARM_RIGHT_MIN);
             robot.armLeft.setPosition(ARM_LEFT_MIN);
 
-            clawButton.resetToggles();
-            robot.claw.setPosition(CLAW_OPEN);
-
             robot.intakeServoRight.setPosition(INTAKE_RIGHT_UP);
             robot.intakeServoLeft.setPosition(INTAKE_LEFT_UP);
 
-            robot.intakeSlideServoRight.setPosition(SLIDE_RIGHT_SEMI_CLOSED);
-            robot.intakeSlideServoLeft.setPosition(SLIDE_LEFT_SEMI_CLOSED);
 
             try {
-                telemetry.addData("Retraction", "Claw opening...");
-                telemetry.update();
-                robot.claw.setPosition(CLAW_OPEN);
-                Thread.sleep(500);
+                Thread.sleep(1000);
 
+                robot.intakeSlideServoRight.setPosition(SLIDE_RIGHT_SEMI_CLOSED);
+                robot.intakeSlideServoLeft.setPosition(SLIDE_LEFT_SEMI_CLOSED);
+                Thread.sleep(500);
                 intakeRotationButton.resetToggles();
                 robot.intakeRotateServo.setPosition(INTAKE_ROTATE_DEGREE);
 
                 Thread.sleep(500);
 
-                robot.claw.setPosition(CLAW_CLOSE);
+                //robot.claw.setPosition(CLAW_CLOSE);
+                telemetry.addData("Retraction", "Claw closing...");
 
                 Thread.sleep(500);
 
@@ -249,7 +246,7 @@ public class MainDrivingGeckoOp extends LinearOpMode {
         }).start();
     }
 
-    private void handleLift(){
+    private void handleLift() {
         robot.liftLeft.run(utilityGamepad.right_trigger - utilityGamepad.left_trigger);
         robot.liftRight.run(utilityGamepad.right_trigger - utilityGamepad.left_trigger);
 
@@ -262,7 +259,7 @@ public class MainDrivingGeckoOp extends LinearOpMode {
             armButton.updateButton(utilityGamepad.dpad_down);
             armButton.shortPress();
             if (armButton.getShortToggle()) {
-                robot.armRight.setPosition(ARM_RIGHT_MAX);
+                robot.armRight.setPosition(ARM_TEST);
                 robot.armLeft.setPosition(ARM_LEFT_MAX);
             } else {
                 robot.armRight.setPosition(ARM_RIGHT_MIN);
@@ -272,24 +269,20 @@ public class MainDrivingGeckoOp extends LinearOpMode {
         }
     }
 
-    private void handleIntake(){
+    private void handleIntake() {
         //Intake height
-        double npoz = robot.intakeLiftServo.getPosition();
-        if(yLeft>0.1)
-            npoz+=increment*yLeft;//*xLeft;
-        else if(yLeft<0.1)
-            npoz-=increment*yLeft
-                    ;//*xLeft;
-        robot.intakeLiftServo.setPosition(Math.max(INTAKE_LIFT_DOWN, Math.min(npoz,INTAKE_LIFT_UP)));
+        robot.intakeLiftServo.setPosition(intakeButton.getShortToggle() ? INTAKE_LIFT_DOWN : INTAKE_LIFT_UP);
 
         //Intake Rotation
-        intakeRotationButton.shortPress();
-        if((yRight * yRight + xRight * xRight)<(INTAKE_ROTATE_LEFT+INTAKE_ROTATE_RIGHT)*1f/2f)
-        {xRight = 0; yRight = 1;};
-        robot.intakeRotateServo.setPosition(Math.max(INTAKE_ROTATE_LEFT, Math.min(((Math.atan2(xRight, yRight)+ROTATION_ADDITION)/ROTATION_DIVISION),INTAKE_ROTATE_RIGHT)));
+         if (Math.hypot(xRight, yRight) > 0.1) {
+            double angle = (Math.atan2(-yRight, xRight) + ROTATION_ADDITION) / ROTATION_DIVISION;
+            robot.intakeRotateServo.setPosition(
+                    Math.max(INTAKE_ROTATE_LEFT, Math.min(angle, INTAKE_ROTATE_RIGHT))
+            );
+        }
     }
 
-    private void handleClaw(){
+    private void handleClaw() {
         if (!waitingRetraction.get()) {
             clawButton.updateButton(utilityGamepad.dpad_right);
             clawButton.shortPress();
