@@ -5,7 +5,6 @@ import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.ARM_RIGHT_M
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.CLAW_CLOSE;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.CLAW_OPEN;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.INTAKE_RIGHT_MAX;
-import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.LIFT_MAX_POSITION;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.SLIDE_LEFT_CLOSED;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.Constants.SLIDE_RIGHT_CLOSED;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.autonomous.AutonomousConstants.EleventhPose;
@@ -15,7 +14,6 @@ import static org.firstinspires.ftc.teamcode.kronbot.utils.autonomous.Autonomous
 import static org.firstinspires.ftc.teamcode.kronbot.utils.autonomous.AutonomousConstants.NinthPose;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.autonomous.AutonomousConstants.Pose1;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.autonomous.AutonomousConstants.Pose2;
-import static org.firstinspires.ftc.teamcode.kronbot.utils.autonomous.AutonomousConstants.Pose3;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.autonomous.AutonomousConstants.SecondPose;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.autonomous.AutonomousConstants.SeventhPose;
 import static org.firstinspires.ftc.teamcode.kronbot.utils.autonomous.AutonomousConstants.SixthPose;
@@ -76,15 +74,16 @@ public class HumanZoneOp extends LinearOpMode {
 
         while (!opModeIsActive() && !isStopRequested()) {
             telemetry.update();
+            robot.intakeSlideServoLeft.setPosition(SLIDE_LEFT_CLOSED);
+            robot.intakeSlideServoRight.setPosition(SLIDE_RIGHT_CLOSED);
+            robot.intakeServoRight.setPosition(INTAKE_RIGHT_MAX);
+            robot.claw.setPosition(CLAW_CLOSE);
         }
 
         waitForStart();
 
 
-        robot.intakeSlideServoLeft.setPosition(SLIDE_LEFT_CLOSED);
-        robot.intakeSlideServoRight.setPosition(SLIDE_RIGHT_CLOSED);
-        robot.intakeClawServo.setPosition(CLAW_OPEN);
-        robot.intakeServoRight.setPosition(INTAKE_RIGHT_MAX);
+
         if (opModeIsActive()) {
             telemetry.update();
 //            TrajectorySequence trajectoryToPoseA = drive.trajectorySequenceBuilder(startPose)
