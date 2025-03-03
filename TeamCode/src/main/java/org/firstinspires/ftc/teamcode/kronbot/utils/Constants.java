@@ -23,11 +23,11 @@ public class Constants {
 
     public static double LIFT_POWER = 1.0;
     public static double LIFT_REST_POWER = 0.0005;
-    public static double LIFT_REVERSE_POWER = 0.8;
+    public static double LIFT_REVERSE_POWER = 0.9;
     public static double LIFT_TOLERANCE = 50;
     public static int LIFT_INIT_POSITION = 0;
     public static int LIFT_ACTION_POSITION = 500;
-    public static int LIFT_MAX_POSITION = 2500;
+    public static int LIFT_MAX_POSITION = 3200;
 
     public static double CAMERA_TRASH_HOLD = 0.2;
     public static int BLUE_HUE_LOW = 0;
@@ -36,26 +36,26 @@ public class Constants {
     public static double ARM_LEFT_INIT = 0.6;
     public static double ARM_LEFT_MIN = 0.6;
     public static double ARM_LEFT_MAX = 0.36;
-    public static double ARM_RIGHT_INIT = 0.65;
-    public static double ARM_RIGHT_MIN = 0.65;
-    public static double ARM_RIGHT_MAX = 0.18;
+    public static double ARM_RIGHT_INIT = 0.85;
+    public static double ARM_RIGHT_MIN = 0.85;
+    public static double ARM_RIGHT_MAX = 0.4;
 
-    public static double CLAW_CLOSE = 0.85;
-    public static double CLAW_OPEN = 1;
+    public static double CLAW_CLOSE = 0.72;
+    public static double CLAW_OPEN = 0.86;
 
-    public static double INTAKE_LEFT_MIN = 0.52;
+    public static double INTAKE_LEFT_MIN = 0.19;
     public static double INTAKE_LEFT_MAX = 0.4;
-    public static double INTAKE_LEFT_UP = 0.52;
-    public static double INTAKE_RIGHT_MIN = 0.68;
-    public static double INTAKE_RIGHT_MAX = 0.83;
-    public static double INTAKE_RIGHT_UP = 0.68;
+    public static double INTAKE_LEFT_UP = 0.19;
+    public static double INTAKE_RIGHT_MIN = 0.7;
+    public static double INTAKE_RIGHT_MAX = 0.75;
+    public static double INTAKE_RIGHT_UP = 0.7;
 
 
-    public static double SLIDE_LEFT_INIT = 0.55;
-    public static double SLIDE_LEFT_CLOSED = 0.55;
+    public static double SLIDE_LEFT_INIT = 0.53;
+    public static double SLIDE_LEFT_CLOSED = 0.53;
     public static double SLIDE_LEFT_OPENED = 0.26;
-    public static double SLIDE_RIGHT_INIT = 0.34;
-    public static double SLIDE_RIGHT_CLOSED = 0.34;
+    public static double SLIDE_RIGHT_INIT = 0.32;
+    public static double SLIDE_RIGHT_CLOSED = 0.32;
     public static double SLIDE_RIGHT_OPENED = 0.07;
     public static LogoFacingDirection LOGO_FACING_DIRECTION = LogoFacingDirection.LEFT;
     public static UsbFacingDirection USB_FACING_DIRECTION = UsbFacingDirection.UP;

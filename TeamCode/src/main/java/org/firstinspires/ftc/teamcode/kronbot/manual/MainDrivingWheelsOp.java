@@ -58,7 +58,9 @@ public class MainDrivingWheelsOp extends LinearOpMode {
     // Actions
     Button retractButton = new Button();
     Button extensionButton = new Button();
-    double increment=0.01;
+
+    Button specimenButton = new Button();
+    double increment = 0.01;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -129,7 +131,7 @@ public class MainDrivingWheelsOp extends LinearOpMode {
             robot.intakeSlideServoRight.setPosition(robot.intakeSlideServoRight.getPosition() - increment);
     }
 
-    private void  INITPose() {
+    private void INITPose() {
         robot.claw.setPosition(CLAW_OPEN);
 
         robot.intakeSlideServoLeft.setPosition(SLIDE_LEFT_INIT);
@@ -196,6 +198,9 @@ public class MainDrivingWheelsOp extends LinearOpMode {
             robot.intakeWheelsRight.runContinuous(true, false);
             robot.intakeWheelsLeft.runContinuous(false, true);
 
+            robot.claw.setPosition(CLAW_OPEN);
+            //Thread.sleep(500);
+
             armButton.resetToggles();
             robot.armRight.setPosition(ARM_RIGHT_MIN);
             robot.armLeft.setPosition(ARM_LEFT_MIN);
@@ -205,6 +210,7 @@ public class MainDrivingWheelsOp extends LinearOpMode {
 
             robot.intakeSlideServoRight.setPosition(SLIDE_RIGHT_CLOSED);
             robot.intakeSlideServoLeft.setPosition(SLIDE_LEFT_CLOSED);
+
 
             try {
                 telemetry.update();
@@ -230,6 +236,49 @@ public class MainDrivingWheelsOp extends LinearOpMode {
     private void handleLift() {
         robot.liftLeft.run(utilityGamepad.right_trigger - utilityGamepad.left_trigger);
         robot.liftRight.run(utilityGamepad.right_trigger - utilityGamepad.left_trigger);
+        robot.liftLeft.getCurrentPosition();
+
+//        //Specimen
+//        specimenButton.updateButton(utilityGamepad.triangle);
+//        specimenButton.shortPress();
+//        if(!extended) {
+//            if (specimenButton.getShortToggle()) {
+//                robot.liftLeft.setPower(1);
+//                robot.liftRight.setPower(1);
+//                robot.liftLeft.setTargetPosition(800);
+//                robot.liftRight.setTargetPosition(800);
+//                robot.armRight.setPosition(ARM_RIGHT_MAX);
+//            } else {
+//
+//                new Thread(() -> {
+//                    robot.liftLeft.setPower(-1);
+//                    robot.liftRight.setPower(-1);
+//                    robot.liftLeft.setTargetPosition(750);
+//                    robot.liftRight.setTargetPosition(750);
+//                    robot.liftLeft.setPower(0);
+//                    robot.liftRight.setPower(0);
+//
+//
+//                    try {
+//                        sleep(500);
+//                        robot.claw.setPosition(CLAW_OPEN);
+//                        telemetry.update();
+//                        robot.armRight.setPosition(ARM_RIGHT_MIN);
+//                        sleep(500);
+//                        robot.liftLeft.setPower(-1);
+//                        robot.liftRight.setPower(-1);
+//                        robot.liftLeft.setTargetPosition(0);
+//                        robot.liftRight.setTargetPosition(0);
+//                        robot.liftLeft.setPower(0);
+//                        robot.liftRight.setPower(0);
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+//                }).start();
+        //}}
+
+
+
 
         //Lift arm
         if (robot.liftLeft.getCurrentPosition() > LIFT_ACTION_POSITION) {
