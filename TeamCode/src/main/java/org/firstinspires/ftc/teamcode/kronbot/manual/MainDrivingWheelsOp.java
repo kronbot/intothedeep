@@ -177,12 +177,17 @@ public class MainDrivingWheelsOp extends LinearOpMode {
         extended = true;
         robot.claw.setPosition(CLAW_OPEN);
 
-        robot.intakeSlideServoRight.setPosition(SLIDE_RIGHT_OPENED);
-        robot.intakeSlideServoLeft.setPosition(SLIDE_LEFT_OPENED);
+        new Thread(() -> {
+            extended=true;
 
-        robot.intakeServoRight.setPosition(INTAKE_RIGHT_MAX);
-        robot.intakeServoLeft.setPosition(INTAKE_LEFT_MAX);
+            robot.intakeSlideServoRight.setPosition(SLIDE_RIGHT_OPENED);
+            robot.intakeSlideServoLeft.setPosition(SLIDE_LEFT_OPENED);
 
+            robot.intakeServoRight.setPosition(INTAKE_RIGHT_MAX);
+            robot.intakeServoLeft.setPosition(INTAKE_LEFT_MAX);
+
+            extended=false;
+        }).start();
 
     }
 
@@ -199,7 +204,7 @@ public class MainDrivingWheelsOp extends LinearOpMode {
             robot.intakeWheelsLeft.runContinuous(false, true);
 
             robot.claw.setPosition(CLAW_OPEN);
-            //Thread.sleep(500);
+            sleep(500);
 
             armButton.resetToggles();
             robot.armRight.setPosition(ARM_RIGHT_MIN);
@@ -216,7 +221,7 @@ public class MainDrivingWheelsOp extends LinearOpMode {
                 telemetry.update();
 
                 robot.claw.setPosition(CLAW_OPEN);
-                Thread.sleep(500);
+                Thread.sleep(700);
 
                 robot.claw.setPosition(CLAW_CLOSE);
                 Thread.sleep(500);
