@@ -26,7 +26,7 @@ public class Constants {
     public static double LIFT_REVERSE_POWER = 0.9;
     public static double LIFT_TOLERANCE = 50;
     public static int LIFT_INIT_POSITION = 0;
-    public static int LIFT_ACTION_POSITION = 500;
+    public static int LIFT_ACTION_POSITION = 1100;
     public static int LIFT_MAX_POSITION = 3200;
 
     public static double CAMERA_TRASH_HOLD = 0.2;
@@ -47,7 +47,7 @@ public class Constants {
     public static double INTAKE_LEFT_MAX = 0.4;
     public static double INTAKE_LEFT_UP = 0.19;
     public static double INTAKE_RIGHT_MIN = 0.7;
-    public static double INTAKE_RIGHT_MAX = 0.8;
+    public static double INTAKE_RIGHT_MAX = 9;
     public static double INTAKE_RIGHT_UP = 0.7;
 
 

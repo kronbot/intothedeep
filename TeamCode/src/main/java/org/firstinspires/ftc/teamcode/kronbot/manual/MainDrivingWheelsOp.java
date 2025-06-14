@@ -176,19 +176,22 @@ public class MainDrivingWheelsOp extends LinearOpMode {
     private void extend() {
         extended = true;
         robot.claw.setPosition(CLAW_OPEN);
+        sleep(500);
+        telemetry.addData("Claw", clawButton.getShortToggle() ? "OPEN" : "CLOSED");
+
 
         new Thread(() -> {
             extended=true;
-
+            //robot.claw.setPosition(CLAW_OPEN);
             robot.intakeSlideServoRight.setPosition(SLIDE_RIGHT_OPENED);
             robot.intakeSlideServoLeft.setPosition(SLIDE_LEFT_OPENED);
 
             robot.intakeServoRight.setPosition(INTAKE_RIGHT_MAX);
             robot.intakeServoLeft.setPosition(INTAKE_LEFT_MAX);
 
-            extended=false;
+            //extended=false;
         }).start();
-
+            extended=false;
     }
 
     private void retract() {
@@ -221,7 +224,7 @@ public class MainDrivingWheelsOp extends LinearOpMode {
                 telemetry.update();
 
                 robot.claw.setPosition(CLAW_OPEN);
-                Thread.sleep(700);
+                Thread.sleep(1000);
 
                 robot.claw.setPosition(CLAW_CLOSE);
                 Thread.sleep(500);
@@ -243,47 +246,6 @@ public class MainDrivingWheelsOp extends LinearOpMode {
         robot.liftRight.run(utilityGamepad.right_trigger - utilityGamepad.left_trigger);
         robot.liftLeft.getCurrentPosition();
 
-//        //Specimen
-//        specimenButton.updateButton(utilityGamepad.triangle);
-//        specimenButton.shortPress();
-//        if(!extended) {
-//            if (specimenButton.getShortToggle()) {
-//                robot.liftLeft.setPower(1);
-//                robot.liftRight.setPower(1);
-//                robot.liftLeft.setTargetPosition(800);
-//                robot.liftRight.setTargetPosition(800);
-//                robot.armRight.setPosition(ARM_RIGHT_MAX);
-//            } else {
-//
-//                new Thread(() -> {
-//                    robot.liftLeft.setPower(-1);
-//                    robot.liftRight.setPower(-1);
-//                    robot.liftLeft.setTargetPosition(750);
-//                    robot.liftRight.setTargetPosition(750);
-//                    robot.liftLeft.setPower(0);
-//                    robot.liftRight.setPower(0);
-//
-//
-//                    try {
-//                        sleep(500);
-//                        robot.claw.setPosition(CLAW_OPEN);
-//                        telemetry.update();
-//                        robot.armRight.setPosition(ARM_RIGHT_MIN);
-//                        sleep(500);
-//                        robot.liftLeft.setPower(-1);
-//                        robot.liftRight.setPower(-1);
-//                        robot.liftLeft.setTargetPosition(0);
-//                        robot.liftRight.setTargetPosition(0);
-//                        robot.liftLeft.setPower(0);
-//                        robot.liftRight.setPower(0);
-//                    } catch (Exception e) {
-//                        e.printStackTrace();
-//                    }
-//                }).start();
-        //}}
-
-
-
 
         //Lift arm
         if (robot.liftLeft.getCurrentPosition() > LIFT_ACTION_POSITION) {
@@ -299,7 +261,6 @@ public class MainDrivingWheelsOp extends LinearOpMode {
             } else {
                 robot.armRight.setPosition(ARM_RIGHT_MIN);
                 robot.armLeft.setPosition(ARM_LEFT_MIN);
-                robot.claw.setPosition(CLAW_CLOSE);
             }
         }
     }
